@@ -5,7 +5,7 @@ import { deployContract } from '../utils/web3';
 import Button from "./common/Button";
 import Textbox from "./common/Textbox";
 
-function Deploy() {
+function ContractForm() {
     const [name, setName] = useState('');
     const [symbol, setSymbol] = useState('');
     const [supply, setSupply] = useState('');
@@ -20,9 +20,15 @@ function Deploy() {
         <div>
             {library &&
                 [
-                    <Textbox label="Token Name" onChange={nameOnChange} />,
-                    <Textbox label="Token Symbol" onChange={symbolOnChange} />,
-                    <Textbox label="Token Supply" onChange={supplyOnChange} />,
+                    <div>
+                        <Textbox label="Token Name" onChange={nameOnChange} />
+                    </div>,
+                    <div>
+                        <Textbox label="Token Symbol" onChange={symbolOnChange} />
+                    </div>,
+                    <div>
+                        <Textbox label="Token Supply" onChange={supplyOnChange} />
+                    </div>,
                     <Button label="Deploy Contract" className="test" onClick={() => deployContract(library!, name, symbol, Number(supply))} />
                 ]
             }
@@ -30,4 +36,4 @@ function Deploy() {
     );
 }
 
-export default Deploy;
+export default ContractForm;

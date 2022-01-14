@@ -7,10 +7,8 @@ interface Props {
 function Textbox({ label, onChange, className }: Props) {
     const fullClassName = className && `add-css-here ${className}`;
 
-    return (
-        <div>
-            <input placeholder={label} type="text" className={fullClassName} onChange={onChange}></input>
-        </div>
+    return (        
+        <input placeholder={label} type="text" className={fullClassName} onChange={onChange}></input>
     );
 }
 
