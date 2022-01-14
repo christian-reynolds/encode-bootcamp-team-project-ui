@@ -19,9 +19,9 @@ export const displayAddress = async (address?: string | null, provider?: provide
   return ensName ?? shortenAddress(address);
 };
 
-export const deployContract = async (provider: providers.Web3Provider) => {
+export const deployContract = async (provider: providers.Web3Provider, name: string, symbol: string, supply: number) => {
   const factory = new ContractFactory(BASE_ERC20.abi, BASE_ERC20.bytecode, provider.getSigner());
-  const contract = await factory.deploy("React Test", "RCT", 100000);
+  const contract = await factory.deploy(name, symbol, supply);
 
   console.log('contract.address: ', contract.address);
   return contract.address;
