@@ -8,7 +8,7 @@ function Button({ label, onClick, className }: Props) {
     const fullClassName = className && `add-css-here ${className}`;
 
     return (
-        <button type="button" className={fullClassName} onClick={onClick}>{label}</button>
+        <button type="submit" className={fullClassName} onClick={onClick}>{label}</button>
     );
 }
 

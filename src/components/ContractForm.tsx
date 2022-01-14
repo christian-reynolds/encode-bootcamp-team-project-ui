@@ -1,36 +1,39 @@
-import { useState } from 'react';
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
 import { deployContract } from '../utils/web3';
 import Button from "./common/Button";
-import Textbox from "./common/Textbox";
+
+interface IFormInput {
+    name: string;
+    symbol: string;
+    supply: number;
+}
 
 function ContractForm() {
-    const [name, setName] = useState('');
-    const [symbol, setSymbol] = useState('');
-    const [supply, setSupply] = useState('');
-
-    const nameOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value);
-    const symbolOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setSymbol(event.target.value);
-    const supplyOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setSupply(event.target.value);
+    const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
+    const onSubmit: SubmitHandler<IFormInput> = data => deployContract(library!, data.name, data.symbol, data.supply);
 
     const { library } = useWeb3React<providers.Web3Provider>();
 
     return (
         <div>
             {library &&
-                [
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
-                        <Textbox label="Token Name" onChange={nameOnChange} />
-                    </div>,
+                        <input {...register("name", { required: true, maxLength: 20 })} />
+                    </div>
+                    {errors.name && <div>Token name is required</div>}
                     <div>
-                        <Textbox label="Token Symbol" onChange={symbolOnChange} />
-                    </div>,
+                        <input {...register("symbol", { required: true, pattern: /^[A-Za-z]+$/i, max: 5 })} />
+                    </div>
+                    {errors.symbol && <div>Token symbol is required</div>}
                     <div>
-                        <Textbox label="Token Supply" onChange={supplyOnChange} />
-                    </div>,
-                    <Button label="Deploy Contract" className="test" onClick={() => deployContract(library!, name, symbol, Number(supply))} />
-                ]
+                        <input type="number" {...register("supply", { required: true, min: 1 })} />
+                    </div>
+                    {errors.supply && <div>Token supply is required and must be greater than zero</div>}
+                    <Button label="Deploy Contract" className="test" />
+                </form>                
             }
         </div>
     );
