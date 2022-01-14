@@ -1,4 +1,5 @@
-import { providers } from 'ethers';
+import { providers, ContractFactory } from 'ethers';
+import VOLCANO_COIN from './VolcanoCoin.json';
 
 export const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 
@@ -16,4 +17,12 @@ export const displayAddress = async (address?: string | null, provider?: provide
   if (!address) return undefined;
   const ensName = provider && await lookupEnsName(address, provider);
   return ensName ?? shortenAddress(address);
+};
+
+export const deployContract = async (provider: providers.Web3Provider) => {
+  const factory = new ContractFactory(VOLCANO_COIN.abi, VOLCANO_COIN.bytecode, provider.getSigner());
+  const contract = await factory.deploy();
+
+  console.log('contract.address: ', contract.address);
+  return contract.address;
 };

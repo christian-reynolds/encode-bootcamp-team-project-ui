@@ -4,6 +4,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Wallet from './components/Wallet';
+import Deploy from './components/Deploy';
 
 const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 
@@ -14,6 +15,7 @@ function App() {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <Wallet />
+          <Deploy />
         </header>
       </div>
     </Web3ReactProvider>

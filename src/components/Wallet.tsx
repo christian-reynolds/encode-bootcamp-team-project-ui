@@ -4,6 +4,7 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
 import { displayAddress } from "../utils/web3";
+import Button from "./common/Button";
 
 declare let window: {
     ethereum: any
@@ -36,7 +37,7 @@ function Wallet() {
     }
 
     return (
-        <button type="button" onClick={() => activate(injectedConnector)}>{label}</button>
+        <Button label={label} onClick={() => activate(injectedConnector)} />
     );
 }
 
