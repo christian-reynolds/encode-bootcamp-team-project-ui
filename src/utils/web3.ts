@@ -1,5 +1,5 @@
 import { providers, ContractFactory } from 'ethers';
-import VOLCANO_COIN from './VolcanoCoin.json';
+import BASE_ERC20 from './BaseErc20.json';
 
 export const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 
@@ -20,8 +20,8 @@ export const displayAddress = async (address?: string | null, provider?: provide
 };
 
 export const deployContract = async (provider: providers.Web3Provider) => {
-  const factory = new ContractFactory(VOLCANO_COIN.abi, VOLCANO_COIN.bytecode, provider.getSigner());
-  const contract = await factory.deploy();
+  const factory = new ContractFactory(BASE_ERC20.abi, BASE_ERC20.bytecode, provider.getSigner());
+  const contract = await factory.deploy("React Test", "RCT", 100000);
 
   console.log('contract.address: ', contract.address);
   return contract.address;
