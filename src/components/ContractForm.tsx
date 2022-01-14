@@ -21,15 +21,15 @@ function ContractForm() {
             {library &&
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
-                        <input {...register("name", { required: true, maxLength: 20 })} />
+                        <input {...register("name", { required: true, maxLength: 20 })} placeholder="Token Name" />
                     </div>
                     {errors.name && <div>Token name is required</div>}
                     <div>
-                        <input {...register("symbol", { required: true, pattern: /^[A-Za-z]+$/i, max: 5 })} />
+                        <input {...register("symbol", { required: true, pattern: /^[A-Za-z]+$/i, max: 5 })} placeholder="Token Symbol" />
                     </div>
                     {errors.symbol && <div>Token symbol is required</div>}
                     <div>
-                        <input type="number" {...register("supply", { required: true, min: 1 })} />
+                        <input type="number" {...register("supply", { required: true, min: 1 })} placeholder="Token Supply" />
                     </div>
                     {errors.supply && <div>Token supply is required and must be greater than zero</div>}
                     <Button label="Deploy Contract" className="test" />
