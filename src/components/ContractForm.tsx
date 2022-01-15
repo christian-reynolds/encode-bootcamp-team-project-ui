@@ -20,19 +20,29 @@ function ContractForm() {
         <div>
             {library &&
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div>
-                        <input {...register("name", { required: true, maxLength: 20 })} placeholder="Token Name" />
+                    <div className="flex justify-center align-middle items-center">
+                        <div className="border-2 p-2 my-2">
+                            <div className="grid grid-cols-1 items-center px-4 text-lg font-bold text-black">
+                                <input {...register("name", { required: true, maxLength: 20 })} placeholder="Token Name" className="px-1" />
+                            </div>
+                        </div>
+                        {errors.name && <div>Token name is required</div>}
+                        <div className="border-2 p-2 my-2">
+                            <div className="grid grid-cols-1 items-center px-4 text-lg font-bold text-black">
+                                <input {...register("symbol", { required: true, pattern: /^[A-Za-z]+$/i, max: 5 })} placeholder="Token Symbol" className="px-1" />
+                            </div>
+                        </div>
+                        {errors.symbol && <div>Token symbol is required</div>}
+                        <div className="border-2 p-2 my-2">
+                            <div className="grid grid-cols-1 items-center px-4 text-lg font-bold text-black">
+                                <input type="number" {...register("supply", { required: true, min: 1 })} placeholder="Token Supply" className="px-1" />
+                            </div>
+                        </div>
+                        {errors.supply && <div>Token supply is required and must be greater than zero</div>}
+                        <div className="grid grid-cols-1 items-center px-4 text-lg font-bold">
+                            <Button label="Deploy Contract" />
+                        </div>
                     </div>
-                    {errors.name && <div>Token name is required</div>}
-                    <div>
-                        <input {...register("symbol", { required: true, pattern: /^[A-Za-z]+$/i, max: 5 })} placeholder="Token Symbol" />
-                    </div>
-                    {errors.symbol && <div>Token symbol is required</div>}
-                    <div>
-                        <input type="number" {...register("supply", { required: true, min: 1 })} placeholder="Token Supply" />
-                    </div>
-                    {errors.supply && <div>Token supply is required and must be greater than zero</div>}
-                    <Button label="Deploy Contract" className="test" />
                 </form>                
             }
         </div>
