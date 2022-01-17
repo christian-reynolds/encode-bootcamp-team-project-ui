@@ -10,7 +10,7 @@ interface IFormInput {
     supply: string;
 }
 
-function ContractForm() {
+function TokenCreationForm() {
     const { account, library } = useWeb3React<providers.Web3Provider>();
     
     const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
@@ -61,4 +61,4 @@ function ContractForm() {
     );
 }
 
-export default ContractForm;
+export default TokenCreationForm;

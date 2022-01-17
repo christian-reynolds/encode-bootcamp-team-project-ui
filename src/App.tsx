@@ -4,7 +4,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Wallet from './components/Wallet';
-import ContractForm from './components/ContractForm';
+import TokenCreationForm from './components/TokenCreationForm';
 
 const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 
@@ -15,7 +15,7 @@ function App() {
         <header className="App-header">
           <Wallet />
           <img src={logo} className="App-logo" alt="logo" />
-          <ContractForm />
+          <TokenCreationForm />
         </header>
       </div>
     </Web3ReactProvider>
