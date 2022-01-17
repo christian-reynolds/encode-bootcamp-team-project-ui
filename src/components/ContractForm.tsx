@@ -7,7 +7,7 @@ import Button from "./common/Button";
 interface IFormInput {
     name: string;
     symbol: string;
-    supply: number;
+    supply: string;
 }
 
 function ContractForm() {
