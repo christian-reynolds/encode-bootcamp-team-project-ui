@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
@@ -11,22 +12,31 @@ interface IFormInput {
 }
 
 function TokenCreationForm() {
+    const [deployedTokens, setDeployedTokens] = useState<string>('');
     const { account, library } = useWeb3React<providers.Web3Provider>();
-    
+    const accountStorage = 'account-' + account!;    
+
+    const getDeployedTokens = () => {
+        const retrievedData = localStorage.getItem(accountStorage);
+        (retrievedData ? setDeployedTokens(retrievedData) :  setDeployedTokens(''));
+    };
+
     const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         const contractAddr = await deployContract(library!, data.name, data.symbol, data.supply);
-        const accountStorage = 'account-' + account!;
         const contracts = [contractAddr];
-        const retrievedData = localStorage.getItem(accountStorage);
 
-        if (retrievedData) {
-            const retrievedObj = JSON.parse(retrievedData);
+        if (deployedTokens) {
+            const retrievedObj = JSON.parse(deployedTokens);
             localStorage.setItem(accountStorage, JSON.stringify([...retrievedObj, ...contracts]));
         } else {
             localStorage.setItem(accountStorage, JSON.stringify(contracts));
         }
     };
+
+    useEffect(() => {
+        getDeployedTokens();
+    }, [account, localStorage.getItem(accountStorage)]);
 
     return (
         <div>
