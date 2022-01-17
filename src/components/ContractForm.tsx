@@ -11,10 +11,22 @@ interface IFormInput {
 }
 
 function ContractForm() {
+    const { account, library } = useWeb3React<providers.Web3Provider>();
+    
     const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
-    const onSubmit: SubmitHandler<IFormInput> = data => deployContract(library!, data.name, data.symbol, data.supply);
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        const contractAddr = await deployContract(library!, data.name, data.symbol, data.supply);
+        const accountStorage = 'account-' + account!;
+        const contracts = [contractAddr];
+        const retrievedData = localStorage.getItem(accountStorage);
 
-    const { library } = useWeb3React<providers.Web3Provider>();
+        if (retrievedData) {
+            const retrievedObj = JSON.parse(retrievedData);
+            localStorage.setItem(accountStorage, JSON.stringify([...retrievedObj, ...contracts]));
+        } else {
+            localStorage.setItem(accountStorage, JSON.stringify(contracts));
+        }
+    };
 
     return (
         <div>
