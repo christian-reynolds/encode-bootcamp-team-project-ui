@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
@@ -11,15 +10,14 @@ interface IFormInput {
     supply: string;
 }
 
-function TokenCreationForm() {
-    const [deployedTokens, setDeployedTokens] = useState<string>('');
-    const { account, library } = useWeb3React<providers.Web3Provider>();
-    const accountStorage = 'account-' + account!;    
+interface Props {
+    accountStorage: string;
+    deployedTokens: string;
+    getDeployedTokens: () => void;
+}
 
-    const getDeployedTokens = () => {
-        const retrievedData = localStorage.getItem(accountStorage);
-        (retrievedData ? setDeployedTokens(retrievedData) :  setDeployedTokens(''));
-    };
+function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }: Props) {
+    const { library } = useWeb3React<providers.Web3Provider>();
 
     const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
@@ -32,11 +30,9 @@ function TokenCreationForm() {
         } else {
             localStorage.setItem(accountStorage, JSON.stringify(contracts));
         }
-    };
 
-    useEffect(() => {
         getDeployedTokens();
-    }, [account, localStorage.getItem(accountStorage)]);
+    };
 
     return (
         <div>
