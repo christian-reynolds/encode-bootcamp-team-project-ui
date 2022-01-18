@@ -21,7 +21,7 @@ function Main() {
   
     return (
         <div>
-            <Wallet />
+            <Wallet /><br /><br />
             <TokenCreationForm accountStorage={accountStorage} deployedTokens={deployedTokens} getDeployedTokens={getDeployedTokens} />
             {deployedTokens && <DeployedTokens deployedTokens={deployedTokens} />}
         </div>
