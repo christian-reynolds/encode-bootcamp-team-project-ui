@@ -11,7 +11,7 @@ function Main() {
   
     const getDeployedTokens = () => {
       const retrievedData = localStorage.getItem(accountStorage);
-      (retrievedData ? setDeployedTokens(retrievedData) :  setDeployedTokens(''));
+      (retrievedData ? setDeployedTokens(retrievedData) : setDeployedTokens(''));
     };
   
     useEffect(() => {
