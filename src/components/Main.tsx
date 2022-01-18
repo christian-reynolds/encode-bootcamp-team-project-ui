@@ -19,11 +19,9 @@ function Main() {
     }, [account, localStorage.getItem(accountStorage)]);
   
     return (
-        <div className="App">
-            <header className="App-header">
+        <div>
             <Wallet />
             <TokenCreationForm accountStorage={accountStorage} deployedTokens={deployedTokens} getDeployedTokens={getDeployedTokens} />
-            </header>
         </div>
     );
   }

@@ -8,7 +8,11 @@ const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 function App() {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <Main />
+      <div className="App">
+          <header className="App-header">
+            <Main />
+          </header>
+        </div>
     </Web3ReactProvider>
   );
 }
