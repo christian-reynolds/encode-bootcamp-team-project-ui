@@ -3,6 +3,7 @@ import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
 import Wallet from './Wallet';
 import TokenCreationForm from './TokenCreationForm';
+import DeployedTokens from './DeployedTokens';
 
 function Main() {
     const [deployedTokens, setDeployedTokens] = useState<string>('');
@@ -22,6 +23,7 @@ function Main() {
         <div>
             <Wallet />
             <TokenCreationForm accountStorage={accountStorage} deployedTokens={deployedTokens} getDeployedTokens={getDeployedTokens} />
+            {deployedTokens && <DeployedTokens deployedTokens={deployedTokens} />}
         </div>
     );
   }
