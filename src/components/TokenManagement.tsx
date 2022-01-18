@@ -42,7 +42,7 @@ function TokenManagement() {
     useEffect(() => {        
         if (account) {
             isContractOwner();
-            callFunction(library!, tokenId!, "balanceOf", account);
+            callFunction(library!, tokenId!, "balanceOf(address)", account);
         }
     }, [account, tokenId]);
 

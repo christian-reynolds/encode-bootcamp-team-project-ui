@@ -39,6 +39,6 @@ export const callFunction = async (provider: providers.Web3Provider, contractAdd
 
   console.log('symbol: ', await contract.symbol());
 
-  const test = await contract["renounceOwnership"]();
-  console.log("renounceOwnership: ", test);
+  // const test = await contract["renounceOwnership"]();
+  // console.log("renounceOwnership: ", test);
 };
