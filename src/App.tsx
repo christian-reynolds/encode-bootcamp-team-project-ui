@@ -3,6 +3,8 @@ import { providers } from 'ethers';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Main from './components/Main';
+import TokenManagement from './components/TokenManagement';
+import Wallet from './components/Wallet';
 
 const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 
@@ -11,6 +13,7 @@ function App() {
     <Web3ReactProvider getLibrary={getLibrary}>
       <div className="App">
         <header className="App-header">
+          <Wallet />
           <BrowserRouter>
             <Routes>
               <Route 
@@ -19,6 +22,7 @@ function App() {
               />
               <Route 
                 path="/token/:tokenId"
+                element={<TokenManagement />}
               />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
