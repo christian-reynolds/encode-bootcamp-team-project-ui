@@ -14,7 +14,7 @@ function DeployedTokens({ deployedTokens }: Props) {
             <div className="w-full">
                 <table className="table-fixed w-full text-base">
                     <tbody>
-                        {deployedTokensObj.map((contract: string) => (<tr key={contract}><td>{contract}</td></tr>))}
+                        {deployedTokensObj.map((contract: string) => (<tr key={contract}><td><a href={`/token/${contract}`}>{contract}</a></td></tr>))}
                     </tbody>
                 </table>
             </div>
