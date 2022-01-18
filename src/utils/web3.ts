@@ -1,4 +1,4 @@
-import { providers, ContractFactory, utils } from 'ethers';
+import { providers, ContractFactory, utils, Contract } from 'ethers';
 import BASE_ERC20 from './BaseErc20.json';
 
 export const getLibrary = (provider: any) => new providers.Web3Provider(provider);
@@ -25,4 +25,20 @@ export const deployContract = async (provider: providers.Web3Provider, name: str
 
   console.log('contract.address: ', contract.address);
   return contract.address;
+};
+
+export const callFunction = async (provider: providers.Web3Provider, contractAddress: string, functionName: string, walletAddress: string) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider.getSigner());
+
+  // balanceOf
+  const balanceOf = await contract[functionName](walletAddress);
+  console.log(functionName + ": ", utils.formatUnits(balanceOf));
+
+  const owner = await contract['owner']();
+  console.log('owner: ', owner);
+
+  console.log('symbol: ', await contract.symbol());
+
+  const test = await contract["renounceOwnership"]();
+  console.log("renounceOwnership: ", test);
 };

@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ZERO_ADDRESS } from '../utils/constants';
 import { getTokensForAccount } from '../utils/tokens';
 import BASE_ERC20 from '../utils/BaseErc20.json';
+import { callFunction } from '../utils/web3';
 
 type Params = 'tokenId';
 
@@ -41,12 +42,25 @@ function TokenManagement() {
     useEffect(() => {        
         if (account) {
             isContractOwner();
+            callFunction(library!, tokenId!, "balanceOf", account);
         }
     }, [account, tokenId]);
 
     return (
         <div>
-            
+            <div className="w-full">
+                <table className="table-fixed w-full text-base">
+                    <tbody>
+                        {abiViewNoInput.map((item) => (<tr><td>{item.name}</td></tr>))}
+                        <tr><td>&nbsp;</td></tr>
+                        {abiViewInput.map((item) => (<tr><td>{item.name}</td></tr>))}
+                        <tr><td>&nbsp;</td></tr>
+                        {abiWriteNoInput.map((item) => (<tr><td>{item.name}</td></tr>))}
+                        <tr><td>&nbsp;</td></tr>
+                        {/* {abiWriteInput.map((item) => (<tr><td>{item.name}</td></tr>))} */}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
