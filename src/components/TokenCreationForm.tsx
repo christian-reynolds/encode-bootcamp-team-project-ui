@@ -62,7 +62,7 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
                             </div>
                         </div>
                         <div className="grid grid-cols-1 items-center px-4 text-lg font-bold">
-                            <Button label="Deploy Contract" />
+                            <Button label="Deploy Token" />
                         </div>
                     </div>
                 </form>                

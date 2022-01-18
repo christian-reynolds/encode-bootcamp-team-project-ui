@@ -1,7 +1,3 @@
-import { ReactChild, ReactFragment, ReactPortal, useEffect, useState } from 'react';
-import { useWeb3React } from '@web3-react/core';
-import { providers } from 'ethers';
-
 interface Props {
     deployedTokens: string;
 }
@@ -13,8 +9,9 @@ function DeployedTokens({ deployedTokens }: Props) {
 
     return (
         <div>
+            <br />
             <h3 className="font-bold text-center text-base">DEPLOYED TOKENS</h3>
-            <div className="w-full xl:w-4/5 mx-auto">
+            <div className="w-full">
                 <table className="table-fixed w-full text-base">
                     <tbody>
                         {deployedTokensObj.map((contract: string) => (<tr><td>{contract}</td></tr>))}
