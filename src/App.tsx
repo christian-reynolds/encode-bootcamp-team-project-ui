@@ -18,7 +18,7 @@ function App() {
                 element={<Main />}
               />
               <Route 
-                path="/account"
+                path="/token/:tokenId"
               />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
