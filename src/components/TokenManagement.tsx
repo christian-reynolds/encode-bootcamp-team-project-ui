@@ -41,8 +41,8 @@ function TokenManagement() {
         if (!retrievedTokens || !retrievedTokens?.includes(tokenId!)) navigate('/');
     };
 
-    const callContractFunction = async () => {
-        console.log('you clicked me!');
+    const callContractFunction = async (test: string) => {
+        console.log(test);
     };
 
     // TODO: There is a bug with this logic.
@@ -57,7 +57,7 @@ function TokenManagement() {
     return (
         <>
             <div className="flex flex-wrap justify-center items-center h-screen w-full">
-                {abiWrite.map((item) => (<TokenManagementForm name={item.name} inputs={item.inputs} onClick={callContractFunction} />))}
+                {abiWrite.map((item) => (<TokenManagementForm name={item.name} inputs={item.inputs} onClick={() => callContractFunction(item.name)} />))}
             </div>
         </>
     );
