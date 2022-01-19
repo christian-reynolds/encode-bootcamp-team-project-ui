@@ -41,6 +41,10 @@ function TokenManagement() {
         if (!retrievedTokens || !retrievedTokens?.includes(tokenId!)) navigate('/');
     };
 
+    const callContractFunction = async () => {
+        console.log('you clicked me!');
+    };
+
     // TODO: There is a bug with this logic.
     // If there is no account connected then it allows you to stay on the page when you shouldn't be. Not sure how to handle this right now
     useEffect(() => {        
@@ -53,7 +57,7 @@ function TokenManagement() {
     return (
         <>
             <div className="flex flex-wrap justify-center items-center h-screen w-full">
-                {abiWrite.map((item) => (<TokenManagementForm name={item.name} inputs={item.inputs} />))}
+                {abiWrite.map((item) => (<TokenManagementForm name={item.name} inputs={item.inputs} onClick={callContractFunction} />))}
             </div>
         </>
     );
