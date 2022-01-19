@@ -6,6 +6,7 @@ import { ZERO_ADDRESS } from '../utils/constants';
 import { getTokensForAccount } from '../utils/tokens';
 import BASE_ERC20 from '../utils/BaseErc20.json';
 import { callFunction } from '../utils/web3';
+import { ContractAbi } from '../utils/interfaces';
 
 type Params = 'tokenId';
 
@@ -15,13 +16,15 @@ function TokenManagement() {
     const tokenId = params.tokenId;
     const { account, library } = useWeb3React<providers.Web3Provider>();
 
-    const abiViewNoInput = BASE_ERC20.abi.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length === 0);
-    const abiViewInput = BASE_ERC20.abi.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length > 0);
+    const test = BASE_ERC20.abi as ContractAbi[];
 
-    const abiWriteNoInput = BASE_ERC20.abi.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length === 0);
-    const abiWriteInput = BASE_ERC20.abi.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length > 0);
+    const abiViewNoInput = test.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length === 0);
+    const abiViewInput = test.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length > 0);
 
-    console.log('abi: ', BASE_ERC20.abi);
+    const abiWriteNoInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length === 0);
+    const abiWriteInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length > 0);
+
+    console.log('abi: ', test);
 
     console.log('abiViewNoInput: ', abiViewNoInput);
     console.log('abiViewInput: ', abiViewInput);
