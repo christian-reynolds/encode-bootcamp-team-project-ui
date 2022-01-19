@@ -19,19 +19,19 @@ function TokenManagement() {
 
     const test = BASE_ERC20.abi as ContractAbi[];
 
-    const abiViewNoInput = test.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length === 0);
-    const abiViewInput = test.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length > 0);
+    // const abiViewNoInput = test.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length === 0);
+    // const abiViewInput = test.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length > 0);
 
-    const abiWriteNoInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length === 0);
-    const abiWriteInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length > 0);
+    // const abiWriteNoInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length === 0);
+    // const abiWriteInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length > 0);
+
+    const abiView = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view');
+    const abiWrite = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view');
 
     console.log('abi: ', test);
 
-    console.log('abiViewNoInput: ', abiViewNoInput);
-    console.log('abiViewInput: ', abiViewInput);
-
-    console.log('abiWriteNoInput: ', abiWriteNoInput);
-    console.log('abiWriteInput: ', abiWriteInput);
+    console.log('abiView: ', abiView);
+    console.log('abiWrite: ', abiWrite);
 
     // Make sure the active account is the owner
     // This logic isn't bullet proof because someone could manually edit the local storage in their browser
@@ -53,9 +53,7 @@ function TokenManagement() {
     return (
         <>
             <div className="flex flex-wrap justify-center items-center h-screen w-full">
-                
-                    {abiWriteInput.map((item) => (<TokenManagementForm name={item.name} inputs={item.inputs} />))}
-                
+                {abiWrite.map((item) => (<TokenManagementForm name={item.name} inputs={item.inputs} />))}
             </div>
         </>
     );
