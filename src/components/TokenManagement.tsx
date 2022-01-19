@@ -7,6 +7,7 @@ import { getTokensForAccount } from '../utils/tokens';
 import BASE_ERC20 from '../utils/BaseErc20.json';
 import { callFunction } from '../utils/web3';
 import { ContractAbi } from '../utils/interfaces';
+import TokenManagementForm from './TokenManagementForm';
 
 type Params = 'tokenId';
 
@@ -54,12 +55,35 @@ function TokenManagement() {
             <div className="w-full">
                 <table className="table-fixed w-full text-base">
                     <tbody>
-                        {abiViewNoInput.map((item) => (<tr><td>{item.name}</td></tr>))}
+                        {/* {abiWriteInput.map((funct) => {
+                            return funct.inputs.map((inpt) => (
+                                <tr><td>{funct.name} - {inpt.name}</td></tr>
+                            ))
+                        })} */}
+
+                        {abiWriteInput.map(obj =>
+                            <tr>
+                                <td>
+                                    <tr key={obj.name}>
+                                        <td>{obj.name}</td>
+                                    </tr>
+                                    { obj.inputs.map(obj2 => 
+                                        <tr key={obj2.name}>
+                                            <td>{obj2.name}</td>
+                                            <td><input type="text" /></td>
+                                        </tr>
+                                    )}
+                                </td>
+                            </tr>
+                        )}
+
+                        {/* {abiWriteInput.map((item) => (<tr><td>{item.name}</td></tr> && item.inputs.map((i) => (<TokenManagementForm input={i} />))))} */}
+                        {/* {abiViewNoInput.map((item) => (<tr><td>{item.name}</td></tr>))}
                         <tr><td>&nbsp;</td></tr>
                         {abiViewInput.map((item) => (<tr><td>{item.name}</td></tr>))}
                         <tr><td>&nbsp;</td></tr>
                         {abiWriteNoInput.map((item) => (<tr><td>{item.name}</td></tr>))}
-                        <tr><td>&nbsp;</td></tr>
+                        <tr><td>&nbsp;</td></tr> */}
                         {/* {abiWriteInput.map((item) => (<tr><td>{item.name}</td></tr>))} */}
                     </tbody>
                 </table>
