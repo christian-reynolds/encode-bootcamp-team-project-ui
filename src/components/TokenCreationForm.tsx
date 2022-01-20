@@ -17,7 +17,7 @@ interface Props {
 }
 
 function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }: Props) {
-    const { account, library } = useWeb3React<providers.Web3Provider>();
+    const { library } = useWeb3React<providers.Web3Provider>();
 
     const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
