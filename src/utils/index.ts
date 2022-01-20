@@ -13,10 +13,10 @@ export const toast = (content: ToastContent, options?: ToastOptions) => {
 };
 
 export const toastPromise = (promise: Promise<any>) => {
-    let test;
+    let returnObj;
 
     doToast.promise(
-        test = promise,
+        returnObj = promise,
         {
           pending: {
             render(){
@@ -49,5 +49,5 @@ export const toastPromise = (promise: Promise<any>) => {
         }
     );
 
-    return test;
+    return returnObj;
 };
