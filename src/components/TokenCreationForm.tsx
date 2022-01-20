@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
 import { deployContract } from '../utils/web3';
 import Button from "./common/Button";
-import { toast } from "../utils";
+import { toast, toastPromise } from "../utils";
 
 interface IFormInput {
     name: string;
@@ -22,8 +22,9 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
 
     const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        try {
-            const contractAddr = await deployContract(library!, data.name, data.symbol, data.supply);
+        try {            
+            const tx = deployContract(library!, data.name, data.symbol, data.supply);
+            const contractAddr = await toastPromise(tx);
             const contracts = [contractAddr];
 
             if (deployedTokens) {
@@ -35,20 +36,23 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
 
             getDeployedTokens();
 
-            toast('TOKEN DEPLOYMENT SUBMITTED', {
+            toast('Token created!', {
                 position: 'top-right',
+                icon: '👌',
             });
 
         } catch (error: any) {
             if (error.code && error.code === 4001) {
-                toast('TOKEN DEPLOYMENT REJECTED BY USER', {
+                toast('Token deployment rejected by user', {
                     position: 'top-center',
                     className: 'bg-red-500',
+                    icon: '🤯',
                 });
             } else {
-                toast('TOKEN DEPLOYMENT FAILED', {
+                toast('Token deployment failed', {
                     position: 'top-center',
                     className: 'bg-red-500',
+                    icon: '🤯',
                 });
             }
         }

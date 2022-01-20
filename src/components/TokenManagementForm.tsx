@@ -5,7 +5,7 @@ import { toast as doToast } from 'react-toastify';
 import TextboxDynamic from './common/TextboxDynamic';
 import { Input } from '../utils/interfaces';
 import { callContractFunction } from '../utils/web3';
-import { toast } from "../utils";
+import { toast, toastPromise } from "../utils";
 
 interface Props {
     functionName: string;
@@ -24,56 +24,22 @@ function TokenManagementForm({ functionName, inputs, tokenId }: Props) {
     
     const onClick = async () => {
         try {
-            const txHash = callContractFunction(library!, tokenId!, functionName, Object.values(inputValue));
+            const tx = callContractFunction(library!, tokenId!, functionName, Object.values(inputValue));
+            const hash = await toastPromise(tx);
+            console.log('hash: ', hash);
 
-            doToast.promise(
-                txHash,
-                {
-                  pending: {
-                    render(){
-                      return "Transaction pending..."
-                    },
-                    icon: false,
-                    position: 'top-center',
-                    className: 'border-2 border-black text-black font-bold font-charriot rounded-none bg-white text-center',
-                  },
-                  success: {
-                    render({data}){
-                      return `${functionName} submitted successfully! tx hash: ${data}`
-                    },
-                    // other options
-                    icon: "🟢",
-                    className: '',
-                  },
-                  error: {
-                    render({data}){
-                      // When the promise reject, data will contains the error
-                      console.log((data as any).code);
-                        if ((data as any).code && (data as any).code === 4001) {
-                            return `${functionName} rejected by user`
-                        } else {
-                            return `Error! ${data}`
-                        }
-                    },
-                    icon: "🟢",
-                    className: 'bg-red-500',
-                  }
-                }
-            );
-
-            // toast(functionName + ' submitted', {
-            //     position: 'top-right',
-            // });            
         } catch (error: any) {
             if (error.code && error.code === 4001) {
-                toast(functionName + ' rejected by user', {
+                toast('Transaction rejected by user', {
                     position: 'top-center',
                     className: 'bg-red-500',
+                    icon: '🤯',
                 });
             } else {
-                toast(functionName + ' FAILED', {
+                toast('Transaction failed!', {
                     position: 'top-center',
                     className: 'bg-red-500',
+                    icon: '🤯',
                 });
             }
         }
