@@ -1,6 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
 import { useState } from 'react';
+import { toast as doToast } from 'react-toastify';
 import TextboxDynamic from './common/TextboxDynamic';
 import { Input } from '../utils/interfaces';
 import { callContractFunction } from '../utils/web3';
@@ -23,17 +24,54 @@ function TokenManagementForm({ functionName, inputs, tokenId }: Props) {
     
     const onClick = async () => {
         try {
-            console.log('Made it here!');
-            callContractFunction(library!, tokenId!, functionName, Object.values(inputValue));
+            const txHash = callContractFunction(library!, tokenId!, functionName, Object.values(inputValue));
+
+            doToast.promise(
+                txHash,
+                {
+                  pending: {
+                    render(){
+                      return "Transaction pending..."
+                    },
+                    icon: false,
+                    position: 'top-center',
+                    className: 'border-2 border-black text-black font-bold font-charriot rounded-none bg-white text-center',
+                  },
+                  success: {
+                    render({data}){
+                      return `${functionName} submitted successfully! tx hash: ${data}`
+                    },
+                    // other options
+                    icon: "🟢",
+                    className: '',
+                  },
+                  error: {
+                    render({data}){
+                      // When the promise reject, data will contains the error
+                      console.log((data as any).code);
+                        if ((data as any).code && (data as any).code === 4001) {
+                            return `${functionName} rejected by user`
+                        } else {
+                            return `Error! ${data}`
+                        }
+                    },
+                    icon: "🟢",
+                    className: 'bg-red-500',
+                  }
+                }
+            );
+
+            // toast(functionName + ' submitted', {
+            //     position: 'top-right',
+            // });            
         } catch (error: any) {
-            console.log('Yea, we made it here!');
             if (error.code && error.code === 4001) {
-                toast(' REJECTED BY USER', {
+                toast(functionName + ' rejected by user', {
                     position: 'top-center',
                     className: 'bg-red-500',
                 });
             } else {
-                toast('TOKEN DEPLOYMENT FAILED', {
+                toast(functionName + ' FAILED', {
                     position: 'top-center',
                     className: 'bg-red-500',
                 });
