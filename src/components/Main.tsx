@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
-import Wallet from './Wallet';
 import TokenCreationForm from './TokenCreationForm';
 import DeployedTokens from './DeployedTokens';
+import { getTokensForAccount } from "../utils/tokens";
+import { ZERO_ADDRESS } from '../utils/constants';
 
 function Main() {
     const [deployedTokens, setDeployedTokens] = useState<string>('');
@@ -11,8 +12,8 @@ function Main() {
     const accountStorage = 'account-' + account!;
   
     const getDeployedTokens = () => {
-      const retrievedData = localStorage.getItem(accountStorage);
-      (retrievedData ? setDeployedTokens(retrievedData) : setDeployedTokens(''));
+      const retrievedTokens = getTokensForAccount(account ?? ZERO_ADDRESS);
+      (retrievedTokens ? setDeployedTokens(retrievedTokens) : setDeployedTokens(''));
     };
   
     useEffect(() => {
@@ -21,7 +22,6 @@ function Main() {
   
     return (
         <div>
-            <Wallet /><br /><br />
             <TokenCreationForm accountStorage={accountStorage} deployedTokens={deployedTokens} getDeployedTokens={getDeployedTokens} />
             {deployedTokens && <DeployedTokens deployedTokens={deployedTokens} />}
         </div>
@@ -29,3 +29,4 @@ function Main() {
   }
   
   export default Main;
+  

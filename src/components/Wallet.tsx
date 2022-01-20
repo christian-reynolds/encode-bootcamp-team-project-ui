@@ -37,7 +37,9 @@ function Wallet() {
     }
 
     return (
-        <Button label={label} onClick={() => activate(injectedConnector)} />
+        <div className="p-5">
+            <Button label={label} onClick={() => activate(injectedConnector)} />
+        </div>
     );
 }
 

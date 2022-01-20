@@ -23,3 +23,4 @@ function DeployedTokens({ deployedTokens }: Props) {
   }
   
   export default DeployedTokens;
+  
