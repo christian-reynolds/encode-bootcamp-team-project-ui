@@ -48,7 +48,7 @@ function TokenManagementView({ functionName, inputs, tokenId }: Props) {
                     <TextboxDynamic label={item.name} update={setInputValue} className="border py-2 px-3 text-black" />
                 </div>
             ))}
-            <button className="block bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg mx-auto p-4 rounded" onClick={onClick}>View</button>
+            <button className="block bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg mx-auto p-4 rounded" onClick={onClick}>Read</button>
         </div>
     );
 }

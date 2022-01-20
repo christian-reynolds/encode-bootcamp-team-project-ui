@@ -17,18 +17,11 @@ function TokenManagement() {
     const tokenId = params.tokenId;
     const { account } = useWeb3React<providers.Web3Provider>();
 
-    const test = BASE_ERC20.abi as ContractAbi[];
+    const abi = BASE_ERC20.abi as ContractAbi[];
+    const abiView = abi.filter((item) => item.type === 'function' && item.stateMutability === 'view');
+    const abiWrite = abi.filter((item) => item.type === 'function' && item.stateMutability !== 'view');
 
-    // const abiViewNoInput = test.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length === 0);
-    // const abiViewInput = test.filter((item) => item.type === 'function' && item.stateMutability === 'view' && item.inputs.length > 0);
-
-    // const abiWriteNoInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length === 0);
-    // const abiWriteInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length > 0);
-
-    const abiView = test.filter((item) => item.type === 'function' && item.stateMutability === 'view');
-    const abiWrite = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view');
-
-    console.log('abi: ', test);
+    console.log('abi: ', abi);
     console.log('abiView: ', abiView);
     console.log('abiWrite: ', abiWrite);
 
@@ -49,6 +42,7 @@ function TokenManagement() {
     }, [account, tokenId]);
 
     return (
+        // TODO: Move these into an accordian/tabs or something similar
         <>
             <div className="flex flex-wrap justify-center items-center h-screen w-full">
                 {abiView.map((item) => (<TokenManagementView functionName={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
