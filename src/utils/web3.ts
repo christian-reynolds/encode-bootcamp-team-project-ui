@@ -41,6 +41,6 @@ export const callContractView = async (provider: providers.Web3Provider, contrac
   const contract = new Contract(contractAddress, BASE_ERC20.abi, provider);
   const data = await contract[functionName](...funcParams);
   
-  console.log("data: ", data);
-  return data;
+  console.log("data: ", String(data));
+  return String(data);
 };
