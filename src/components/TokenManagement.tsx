@@ -7,6 +7,7 @@ import { getTokensForAccount } from '../utils/tokens';
 import BASE_ERC20 from '../utils/BaseErc20.json';
 import { ContractAbi } from '../utils/interfaces';
 import TokenManagementWrite from './TokenManagementWrite';
+import TokenManagementView from './TokenManagementView';
 
 type Params = 'tokenId';
 
@@ -50,7 +51,8 @@ function TokenManagement() {
     return (
         <>
             <div className="flex flex-wrap justify-center items-center h-screen w-full">
-                {abiView.map((item) => (<TokenManagementWrite functionName={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
+                {abiView.map((item) => (<TokenManagementView functionName={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
+                {abiWrite.map((item) => (<TokenManagementWrite functionName={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
             </div>
         </>
     );

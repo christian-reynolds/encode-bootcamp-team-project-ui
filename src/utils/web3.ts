@@ -39,8 +39,8 @@ export const callContractWrite = async (provider: providers.Web3Provider, contra
 
 export const callContractView = async (provider: providers.Web3Provider, contractAddress: string, functionName: string, funcParams: string[]) => {
   const contract = new Contract(contractAddress, BASE_ERC20.abi, provider);
-  const tx = await contract[functionName](...funcParams);
+  const data = await contract[functionName](...funcParams);
   
-  console.log("tx: ", tx);
-  // return tx.hash;
+  console.log("data: ", data);
+  return data;
 };
