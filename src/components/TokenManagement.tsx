@@ -44,7 +44,7 @@ function TokenManagement() {
     return (
         // TODO: Move these into an accordian/tabs or something similar
         <>
-            <div className="flex flex-wrap justify-center items-center h-screen w-full">
+            <div className="flex flex-wrap justify-center items-center w-full">
                 {abiView.map((item) => (<TokenManagementView functionName={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
                 {abiWrite.map((item) => (<TokenManagementWrite functionName={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
             </div>
