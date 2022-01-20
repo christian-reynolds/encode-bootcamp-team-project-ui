@@ -3,7 +3,7 @@ import { providers } from 'ethers';
 import { useState } from 'react';
 import TextboxDynamic from './common/TextboxDynamic';
 import { Input } from '../utils/interfaces';
-import { callContractFunction } from '../utils/web3';
+import { callContractWrite } from '../utils/web3';
 import { toast, toastPromise } from "../utils";
 import { ETHERSCAN_BASE } from '../utils/constants';
 
@@ -13,7 +13,7 @@ interface Props {
     tokenId: string;
 }
 
-function TokenManagementForm({ functionName, inputs, tokenId }: Props) {
+function TokenManagementWrite({ functionName, inputs, tokenId }: Props) {
     const { library } = useWeb3React<providers.Web3Provider>();
     const [inputValue, setInputValue] = useState({});
     const [txHash, setTxHash] = useState('');
@@ -26,7 +26,7 @@ function TokenManagementForm({ functionName, inputs, tokenId }: Props) {
     const onClick = async () => {
         try {
             setTxHash('');
-            const tx = callContractFunction(library!, tokenId!, functionName, Object.values(inputValue));
+            const tx = callContractWrite(library!, tokenId!, functionName, Object.values(inputValue));
             const hash = await toastPromise(tx);
             console.log('hash: ', hash);
             setTxHash(hash);
@@ -61,4 +61,4 @@ function TokenManagementForm({ functionName, inputs, tokenId }: Props) {
     );
 }
 
-export default TokenManagementForm;
+export default TokenManagementWrite;

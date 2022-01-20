@@ -28,11 +28,19 @@ export const deployContract = async (provider: providers.Web3Provider, name: str
   return contract.address;
 };
 
-export const callContractFunction = async (provider: providers.Web3Provider, contractAddress: string, functionName: string, funcParams: string[]) => {
+export const callContractWrite = async (provider: providers.Web3Provider, contractAddress: string, functionName: string, funcParams: string[]) => {
   const contract = new Contract(contractAddress, BASE_ERC20.abi, provider.getSigner());
   const tx = await contract[functionName](...funcParams);
   await tx.wait();
 
   console.log(functionName + ": ", tx.hash);
   return tx.hash;
+};
+
+export const callContractView = async (provider: providers.Web3Provider, contractAddress: string, functionName: string, funcParams: string[]) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider);
+  const tx = await contract[functionName](...funcParams);
+  
+  console.log("tx: ", tx);
+  // return tx.hash;
 };

@@ -6,7 +6,7 @@ import { ZERO_ADDRESS } from '../utils/constants';
 import { getTokensForAccount } from '../utils/tokens';
 import BASE_ERC20 from '../utils/BaseErc20.json';
 import { ContractAbi } from '../utils/interfaces';
-import TokenManagementForm from './TokenManagementForm';
+import TokenManagementWrite from './TokenManagementWrite';
 
 type Params = 'tokenId';
 
@@ -24,7 +24,7 @@ function TokenManagement() {
     // const abiWriteNoInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length === 0);
     // const abiWriteInput = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view' && item.inputs.length > 0);
 
-    const abiView = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view');
+    const abiView = test.filter((item) => item.type === 'function' && item.stateMutability === 'view');
     const abiWrite = test.filter((item) => item.type === 'function' && item.stateMutability !== 'view');
 
     console.log('abi: ', test);
@@ -50,7 +50,7 @@ function TokenManagement() {
     return (
         <>
             <div className="flex flex-wrap justify-center items-center h-screen w-full">
-                {abiWrite.map((item) => (<TokenManagementForm functionName={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
+                {abiView.map((item) => (<TokenManagementWrite functionName={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
             </div>
         </>
     );
