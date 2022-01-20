@@ -50,7 +50,7 @@ function TokenManagement() {
     return (
         <>
             <div className="flex flex-wrap justify-center items-center h-screen w-full">
-                {abiWrite.map((item) => (<TokenManagementForm name={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
+                {abiWrite.map((item) => (<TokenManagementForm functionName={item.name} inputs={item.inputs} tokenId={tokenId!} />))}
             </div>
         </>
     );

@@ -27,21 +27,11 @@ export const deployContract = async (provider: providers.Web3Provider, name: str
   return contract.address;
 };
 
-export const callFunction = async (provider: providers.Web3Provider, contractAddress: string, functionName: string, walletAddress: string, quantity: string) => {
+export const callContractFunction = async (provider: providers.Web3Provider, contractAddress: string, functionName: string, funcParams: string[]) => {
   const contract = new Contract(contractAddress, BASE_ERC20.abi, provider.getSigner());
+  const tx = await contract[functionName](...funcParams);
+  await tx.wait();
 
-  const tx = await contract[functionName](quantity);
-  console.log(functionName + ": ", tx);
-
-  // balanceOf
-  // const balanceOf = await contract[functionName](walletAddress);
-  // console.log(functionName + ": ", utils.formatUnits(balanceOf));
-
-  // const owner = await contract['owner']();
-  // console.log('owner: ', owner);
-
-  // console.log('symbol: ', await contract.symbol());
-
-  // const test = await contract["renounceOwnership"]();
-  // console.log("renounceOwnership: ", test);
+  console.log(functionName + ": ", tx.hash);
+  return tx.hash;
 };

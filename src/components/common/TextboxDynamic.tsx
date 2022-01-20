@@ -6,7 +6,7 @@ interface Props {
     className?: string;
 }
 
-function Textbox({ label, update, className }: Props) {
+function TextboxDynamic({ label, update, className }: Props) {
     const updateValue = (event: ChangeEvent<HTMLInputElement>) => {
         // Disregard *any* errors, since they will be caught downstream any way
         const { name, value } = event.target;
@@ -18,4 +18,4 @@ function Textbox({ label, update, className }: Props) {
     );
 }
 
-export default Textbox;
+export default TextboxDynamic;
