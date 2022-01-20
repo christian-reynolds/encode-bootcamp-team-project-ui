@@ -28,9 +28,8 @@ export const toastPromise = (promise: Promise<any>) => {
           },
           success: {
             render({data}){
-              return `Transaction successful! tx hash: ${data}`
+              return 'Transaction successful!'
             },
-            // other options
             icon: '👌',
             className: 'border-2 border-black text-black font-bold font-charriot rounded-none bg-green-500 text-center',
           },
