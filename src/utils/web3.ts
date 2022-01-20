@@ -22,7 +22,8 @@ export const displayAddress = async (address?: string | null, provider?: provide
 export const deployContract = async (provider: providers.Web3Provider, name: string, symbol: string, supply: string) => {
   const factory = new ContractFactory(BASE_ERC20.abi, BASE_ERC20.bytecode, provider.getSigner());
   const contract = await factory.deploy(name, symbol, utils.parseUnits(supply));
-
+  await contract.deployed();
+  
   console.log('contract.address: ', contract.address);
   return contract.address;
 };

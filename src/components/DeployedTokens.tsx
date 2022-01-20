@@ -10,7 +10,7 @@ function DeployedTokens({ deployedTokens }: Props) {
     return (
         <div>
             <br />
-            <h3 className="font-bold text-center text-base">DEPLOYED TOKENS</h3>
+            <h3 className="font-bold text-center text-2xl">Deployed Stock Contracts</h3>
             <div className="w-full">
                 <table className="table-fixed w-full text-base">
                     <tbody>
