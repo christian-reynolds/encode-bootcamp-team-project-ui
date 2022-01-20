@@ -3,6 +3,7 @@ import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
 import { deployContract } from '../utils/web3';
 import Button from "./common/Button";
+import { toast } from "../utils";
 
 interface IFormInput {
     name: string;
@@ -21,17 +22,36 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
 
     const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        const contractAddr = await deployContract(library!, data.name, data.symbol, data.supply);
-        const contracts = [contractAddr];
+        try {
+            const contractAddr = await deployContract(library!, data.name, data.symbol, data.supply);
+            const contracts = [contractAddr];
 
-        if (deployedTokens) {
-            const retrievedObj = JSON.parse(deployedTokens);
-            localStorage.setItem(accountStorage, JSON.stringify([...retrievedObj, ...contracts]));
-        } else {
-            localStorage.setItem(accountStorage, JSON.stringify(contracts));
+            if (deployedTokens) {
+                const retrievedObj = JSON.parse(deployedTokens);
+                localStorage.setItem(accountStorage, JSON.stringify([...retrievedObj, ...contracts]));
+            } else {
+                localStorage.setItem(accountStorage, JSON.stringify(contracts));
+            }
+
+            getDeployedTokens();
+
+            toast('TOKEN DEPLOYMENT SUBMITTED', {
+                position: 'top-right',
+            });
+
+        } catch (error: any) {
+            if (error.code && error.code === 4001) {
+                toast('TOKEN DEPLOYMENT REJECTED BY USER', {
+                    position: 'top-center',
+                    className: 'bg-red-500',
+                });
+            } else {
+                toast('TOKEN DEPLOYMENT FAILED', {
+                    position: 'top-center',
+                    className: 'bg-red-500',
+                });
+            }
         }
-
-        getDeployedTokens();
     };
 
     return (

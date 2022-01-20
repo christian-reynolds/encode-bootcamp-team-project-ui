@@ -1,9 +1,10 @@
 import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
 import { useState } from 'react';
+import TextboxDynamic from './common/TextboxDynamic';
 import { Input } from '../utils/interfaces';
 import { callContractFunction } from '../utils/web3';
-import TextboxDynamic from './common/TextboxDynamic';
+import { toast } from "../utils";
 
 interface Props {
     functionName: string;
@@ -21,7 +22,23 @@ function TokenManagementForm({ functionName, inputs, tokenId }: Props) {
     //   };
     
     const onClick = async () => {
-        callContractFunction(library!, tokenId!, functionName, Object.values(inputValue));
+        try {
+            console.log('Made it here!');
+            callContractFunction(library!, tokenId!, functionName, Object.values(inputValue));
+        } catch (error: any) {
+            console.log('Yea, we made it here!');
+            if (error.code && error.code === 4001) {
+                toast(' REJECTED BY USER', {
+                    position: 'top-center',
+                    className: 'bg-red-500',
+                });
+            } else {
+                toast('TOKEN DEPLOYMENT FAILED', {
+                    position: 'top-center',
+                    className: 'bg-red-500',
+                });
+            }
+        }
     };
 
     return (
