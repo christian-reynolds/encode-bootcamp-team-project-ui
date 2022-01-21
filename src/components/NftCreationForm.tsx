@@ -2,13 +2,16 @@ import { useWeb3React } from "@web3-react/core";
 import { providers } from "ethers";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, toastPromise } from "../utils";
 import { ZERO_ADDRESS } from "../utils/constants";
 import { getTokensForAccount } from "../utils/tokens";
 import { addFile } from "../utils/ipfs";
+import { deployErc721 } from "../utils/web3";
 
 type Params = 'tokenId';
 
 function NftCreationForm() {
+    const { library } = useWeb3React<providers.Web3Provider>();
     const params = useParams<Params>();
     const navigate = useNavigate();
     const tokenId = params.tokenId;
@@ -27,12 +30,21 @@ function NftCreationForm() {
 
     const onClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        console.log(selectedFile);
-        console.log(selectedFile!.name);
+        console.log('selectedFile: ', selectedFile);
 
+        // Upload the image to IPFS
         const url = await addFile(selectedFile);
-        console.log(url);
         setIpfsUrl(url);
+        console.log('ipfsUrl: ', url);        
+
+        // Get the ERC20 owners
+
+        // Create the Merkle Tree and get the Merkle Root
+
+        // Deploy the ERC721 contract
+        const tx = deployErc721(library!, "This is test", "TST", url);
+        const contractAddr = await toastPromise(tx);
+        console.log('contractAddr: ', contractAddr);
     };
     
 
