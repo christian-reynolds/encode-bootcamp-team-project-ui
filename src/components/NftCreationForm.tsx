@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ZERO_ADDRESS } from "../utils/constants";
 import { getTokensForAccount } from "../utils/tokens";
 import { addFile } from "../utils/ipfs";
-// const Buffer = require('buffer/').Buffer;
 
 type Params = 'tokenId';
 
@@ -15,6 +14,7 @@ function NftCreationForm() {
     const tokenId = params.tokenId;
     const { account } = useWeb3React<providers.Web3Provider>();
     const [selectedFile, setSelectedFile] = useState<File>();
+    const [ipfsUrl, setIpfsUrl] = useState('');
     // const [fileBuffer, setFileBuffer] = useState<File>();
 
     // On file select (from the pop up)
@@ -23,12 +23,6 @@ function NftCreationForm() {
         const file = event.target.files && event.target.files[0];
         // Update the state
         setSelectedFile(file!);
-
-        // const reader = new window.FileReader();
-        // reader.readAsArrayBuffer(file!);
-        // reader.onloadend = () => {
-        //     setFileBuffer(new Buffer(reader.result));
-        // };
     };
 
     const onClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,6 +32,7 @@ function NftCreationForm() {
 
         const url = await addFile(selectedFile);
         console.log(url);
+        setIpfsUrl(url);
     };
     
 
@@ -60,13 +55,13 @@ function NftCreationForm() {
     return (
         <div className="flex flex-wrap justify-center items-center w-full">
             <div className="w-full bg-gray-200 rounded shadow-2xl p-8 m-4"> 
-                {selectedFile &&
+                {ipfsUrl &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                        Your nft has been created!
+                        Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a>
                     </p>
                 }
                 <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                    Errors would go here
+                    {/* Errors would go here */}
                 </p>
                 <div className="flex flex-col mb-4">
                     <label className="mb-2 font-bold text-lg text-left text-gray-600">Select Image</label>
