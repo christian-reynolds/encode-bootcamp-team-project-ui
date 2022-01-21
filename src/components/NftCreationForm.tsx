@@ -38,11 +38,8 @@ function NftCreationForm() {
         setIpfsUrl(url);
         console.log('ipfsUrl: ', url);
         
-        // TODO: Get the ERC20 owners
-
-        // TODO: Pass the ERC20 owners into the getMerkleRoot function
         // Create the Merkle Tree and get the Merkle Root
-        const merkleRoot = await getMerkleRoot();
+        const merkleRoot = await getMerkleRoot(tokenId!);
 
         // Deploy the ERC721 contract
         const tx = deployErc721(library!, "This is test", "TST", url, merkleRoot);
