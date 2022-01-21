@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ZERO_ADDRESS } from "../utils/constants";
 import { getTokensForAccount } from "../utils/tokens";
-import Button from "./common/Button";
+import { addFile } from "../utils/ipfs";
+// const Buffer = require('buffer/').Buffer;
 
 type Params = 'tokenId';
 
@@ -14,17 +15,29 @@ function NftCreationForm() {
     const tokenId = params.tokenId;
     const { account } = useWeb3React<providers.Web3Provider>();
     const [selectedFile, setSelectedFile] = useState<File>();
+    // const [fileBuffer, setFileBuffer] = useState<File>();
 
     // On file select (from the pop up)
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const test = event.target.files && event.target.files[0];
-
+        event.preventDefault();
+        const file = event.target.files && event.target.files[0];
         // Update the state
-        setSelectedFile(test!);
+        setSelectedFile(file!);
+
+        // const reader = new window.FileReader();
+        // reader.readAsArrayBuffer(file!);
+        // reader.onloadend = () => {
+        //     setFileBuffer(new Buffer(reader.result));
+        // };
     };
 
-    const onClick = () => {
+    const onClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         console.log(selectedFile);
+        console.log(selectedFile!.name);
+
+        const url = await addFile(selectedFile);
+        console.log(url);
     };
     
 
@@ -59,7 +72,7 @@ function NftCreationForm() {
                     <label className="mb-2 font-bold text-lg text-left text-gray-600">Select Image</label>
                     <input className="border py-2 px-3 text-sm text-black" placeholder="Select Image" type="file" onChange={onFileChange} />
                 </div>
-                <Button label="Create NFT" className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" onClick={onClick} />
+                <button type="submit" className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" onClick={onClick}>Create NFT</button>
             </div>
         </div>
     );
