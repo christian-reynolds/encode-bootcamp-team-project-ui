@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useWeb3React } from '@web3-react/core';
 import { providers } from 'ethers';
-import { deployContract } from '../utils/web3';
+import { deployErc20 } from '../utils/web3';
 import Button from "./common/Button";
 import { toast, toastPromise } from "../utils";
 import { useState } from "react";
@@ -26,10 +26,10 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
             setTxComplete(false);
-            const tx = deployContract(library!, data.name, data.symbol, data.supply);
+            const tx = deployErc20(library!, data.name, data.symbol, data.supply);
             const contractAddr = await toastPromise(tx);
             const contracts = [contractAddr];
-            setTxComplete(true);            
+            setTxComplete(true);
 
             if (deployedTokens) {
                 const retrievedObj = JSON.parse(deployedTokens);

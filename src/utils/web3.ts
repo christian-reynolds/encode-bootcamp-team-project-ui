@@ -19,7 +19,7 @@ export const displayAddress = async (address?: string | null, provider?: provide
   return ensName ?? shortenAddress(address);
 };
 
-export const deployContract = async (provider: providers.Web3Provider, name: string, symbol: string, supply: string) => {
+export const deployErc20 = async (provider: providers.Web3Provider, name: string, symbol: string, supply: string) => {
   const factory = new ContractFactory(BASE_ERC20.abi, BASE_ERC20.bytecode, provider.getSigner());
   const contract = await factory.deploy(name, symbol, utils.parseUnits(supply));
   await contract.deployed();
