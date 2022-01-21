@@ -29,10 +29,9 @@ export const deployErc20 = async (provider: providers.Web3Provider, name: string
   return contract.address;
 };
 
-export const deployErc721 = async (provider: providers.Web3Provider, name: string, symbol: string, baseUrl: string) => {
+export const deployErc721 = async (provider: providers.Web3Provider, name: string, symbol: string, baseUrl: string, merkleRoot: string) => {
   const factory = new ContractFactory(BASE_ERC721.abi, BASE_ERC721.bytecode, provider.getSigner());
-  // TODO: Replace last parameter with the actual Merkle Root
-  const contract = await factory.deploy(name, symbol, baseUrl, "0x05416460deb76d57af601be17e777b93592d8d4d4a4096c57876a91c84f4a712");
+  const contract = await factory.deploy(name, symbol, baseUrl, "0x".concat(merkleRoot));
   await contract.deployed();
   
   console.log('contract.address: ', contract.address);

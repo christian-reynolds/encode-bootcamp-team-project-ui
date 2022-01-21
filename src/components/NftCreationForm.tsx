@@ -7,6 +7,7 @@ import { ZERO_ADDRESS } from "../utils/constants";
 import { getTokensForAccount } from "../utils/tokens";
 import { addFile } from "../utils/ipfs";
 import { deployErc721 } from "../utils/web3";
+import { getMerkleRoot } from "../utils/merkle";
 
 type Params = 'tokenId';
 
@@ -35,14 +36,16 @@ function NftCreationForm() {
         // Upload the image to IPFS
         const url = await addFile(selectedFile);
         setIpfsUrl(url);
-        console.log('ipfsUrl: ', url);        
+        console.log('ipfsUrl: ', url);
+        
+        // TODO: Get the ERC20 owners
 
-        // Get the ERC20 owners
-
+        // TODO: Pass the ERC20 owners into the getMerkleRoot function
         // Create the Merkle Tree and get the Merkle Root
+        const merkleRoot = await getMerkleRoot();
 
         // Deploy the ERC721 contract
-        const tx = deployErc721(library!, "This is test", "TST", url);
+        const tx = deployErc721(library!, "This is test", "TST", url, merkleRoot);
         const contractAddr = await toastPromise(tx);
         console.log('contractAddr: ', contractAddr);
     };
