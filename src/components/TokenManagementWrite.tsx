@@ -6,6 +6,7 @@ import { Input } from '../utils/interfaces';
 import { callContractWrite } from '../utils/web3';
 import { toast, toastPromise } from "../utils";
 import { ETHERSCAN_BASE } from '../utils/constants';
+import Button from './common/Button';
 
 interface Props {
     functionName: string;
@@ -42,7 +43,7 @@ function TokenManagementWrite({ functionName, inputs, tokenId }: Props) {
     };
 
     return (
-        <div className="w-1/2 bg-white rounded shadow-2xl p-8 m-4"> 
+        <div className="w-1/2 bg-gray-200 rounded shadow-2xl p-8 m-4"> 
             <h1 className="block w-full text-left text-gray-800 text-2xl font-bold mb-6">{functionName}</h1>
             {txHash &&
                 <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
@@ -56,7 +57,8 @@ function TokenManagementWrite({ functionName, inputs, tokenId }: Props) {
                     <TextboxDynamic label={item.type} update={setInputValue} className="border py-2 px-3 text-sm text-black" />
                 </div>
             ))}
-            <button className="block bg-teal-400 hover:bg-teal-600 text-white uppercase text-sm mx-auto p-4 rounded" onClick={onClick}>Write</button>
+            <Button label="Write" onClick={onClick} />
+            {/* <button className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" onClick={onClick}>Write</button> */}
         </div>
     );
 }

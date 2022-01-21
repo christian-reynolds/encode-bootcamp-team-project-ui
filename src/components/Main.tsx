@@ -21,7 +21,7 @@ function Main() {
     }, [account, localStorage.getItem(accountStorage)]);
   
     return (
-        <div>
+        <div className="p-10">
             <TokenCreationForm accountStorage={accountStorage} deployedTokens={deployedTokens} getDeployedTokens={getDeployedTokens} />
             {deployedTokens && <DeployedTokens deployedTokens={deployedTokens} />}
         </div>

@@ -7,6 +7,7 @@ import TokenManagement from './components/TokenManagement';
 import Wallet from './components/Wallet';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import NftCreationForm from './components/NftCreationForm';
 
 const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 
@@ -25,13 +26,19 @@ function App() {
         pauseOnHover
       />
       <div className="App">
-        <header className="App-header">
+        <header className="App-header bg-gray-700">
           <Wallet />
+        </header>
+        <div className="App-body bg-gray-500">
           <BrowserRouter>
             <Routes>
               <Route 
                 path="/"
                 element={<Main />}
+              />
+              <Route 
+                path="/nft/:tokenId"
+                element={<NftCreationForm />}
               />
               <Route 
                 path="/token/:tokenId"
@@ -40,7 +47,7 @@ function App() {
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </BrowserRouter>
-        </header>
+        </div>
       </div>
     </Web3ReactProvider>
   );

@@ -1,5 +1,6 @@
 import { providers, ContractFactory, utils, Contract } from 'ethers';
 import BASE_ERC20 from './BaseErc20.json';
+import BASE_ERC721 from './BaseErc721.json';
 
 export const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 
@@ -19,9 +20,18 @@ export const displayAddress = async (address?: string | null, provider?: provide
   return ensName ?? shortenAddress(address);
 };
 
-export const deployContract = async (provider: providers.Web3Provider, name: string, symbol: string, supply: string) => {
+export const deployErc20 = async (provider: providers.Web3Provider, name: string, symbol: string, supply: string) => {
   const factory = new ContractFactory(BASE_ERC20.abi, BASE_ERC20.bytecode, provider.getSigner());
   const contract = await factory.deploy(name, symbol, utils.parseUnits(supply));
+  await contract.deployed();
+  
+  console.log('contract.address: ', contract.address);
+  return contract.address;
+};
+
+export const deployErc721 = async (provider: providers.Web3Provider, name: string, symbol: string, baseUrl: string, merkleRoot: string) => {
+  const factory = new ContractFactory(BASE_ERC721.abi, BASE_ERC721.bytecode, provider.getSigner());
+  const contract = await factory.deploy(name, symbol, baseUrl, "0x".concat(merkleRoot));
   await contract.deployed();
   
   console.log('contract.address: ', contract.address);
