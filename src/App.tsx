@@ -25,8 +25,10 @@ function App() {
         pauseOnHover
       />
       <div className="App">
-        <header className="App-header">
+        <header className="App-header bg-gray-700">
           <Wallet />
+        </header>
+        <div className="App-body bg-gray-500">
           <BrowserRouter>
             <Routes>
               <Route 
@@ -40,7 +42,7 @@ function App() {
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </BrowserRouter>
-        </header>
+        </div>
       </div>
     </Web3ReactProvider>
   );

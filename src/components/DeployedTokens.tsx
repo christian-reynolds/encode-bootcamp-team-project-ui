@@ -8,15 +8,12 @@ function DeployedTokens({ deployedTokens }: Props) {
     if (deployedTokensObj.length === 0) return null;
 
     return (
-        <div>
-            <br />
-            <h3 className="font-bold text-center text-2xl">Deployed Stock Contracts</h3>
-            <div className="w-full">
-                <table className="table-fixed w-full text-base">
-                    <tbody>
-                        {deployedTokensObj.map((contract: string) => (<tr key={contract}><td><a href={`/token/${contract}`}>{contract}</a></td></tr>))}
-                    </tbody>
-                </table>
+        <div className="flex flex-wrap justify-center items-center w-full">
+            <div className="w-full bg-gray-200 rounded shadow-2xl p-8 m-4">
+                <h3 className="font-bold text-center text-2xl">Deployed Stock Contracts</h3>
+                <div className="flex flex-col mb-4 w-full text-gray-600">
+                    {deployedTokensObj.map((contract: string) => (<tr key={contract}><td><a href={`/token/${contract}`}>{contract}</a></td></tr>))}
+                </div>
             </div>
         </div>
     );
