@@ -54,3 +54,14 @@ export const callContractView = async (provider: providers.Web3Provider, contrac
   console.log("data: ", String(data));
   return String(data);
 };
+
+export const claimNft = async (provider: providers.Web3Provider, contractAddress: string, proof: string) => {
+  // TODO: Figure out how to get the ERC721 contract address and replace the hardcoded address
+  const contract = new Contract("0xd341367d86bEE78763E91627910C8F1FBA0fdC4d", BASE_ERC721.abi, provider.getSigner());
+  // TODO: Fix the error that is happening with passing the proof to the function
+  const tx = await contract.claim(utils.toUtf8Bytes(proof));
+  await tx.wait();
+  
+  console.log("claimNft: ", tx.hash);
+  return tx.hash;
+};

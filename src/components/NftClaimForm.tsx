@@ -3,35 +3,48 @@ import { providers } from "ethers";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toastPromise } from "../utils";
-import { getMerkleRoot } from "../utils/merkle";
+import { getMerkleProof } from "../utils/merkle";
+import { claimNft } from "../utils/web3";
 
 type Params = 'tokenId';
 
 function NftClaimForm() {
     const { library, account } = useWeb3React<providers.Web3Provider>();
-    const [nftClaimed, setNftClaimed] = useState('');
+    const [hasCheckedEligibility, setHasCheckedEligibility] = useState(false);
+    const [eligibleToClaim, setEligibleToClaim] = useState(false);
     const params = useParams<Params>();
     const navigate = useNavigate();
     const tokenId = params.tokenId;
 
     const onClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+        setHasCheckedEligibility(true);
 
-        // Create the Merkle Tree and get the Merkle Root
-        const merkleRoot = await getMerkleRoot(tokenId!);
+        // Get the proof that will be sent to the ERC721 claim function
+        const merkleProof = await getMerkleProof(tokenId!, account!);
 
-        // Deploy the ERC721 contract
-        // const tx;
-        // const contractAddr = await toastPromise(tx);
-        // console.log('contractAddr: ', contractAddr);
+        if (merkleProof) {
+            setEligibleToClaim(true);
+            // Call the ERC721 claim function and pass in the proof
+            const tx = claimNft(library!, tokenId!, merkleProof);
+            const txHash = await toastPromise(tx);
+            console.log('txHash: ', txHash);
+        } else {
+            setEligibleToClaim(false);
+        }
     };
 
     return (
         <div className="flex flex-wrap justify-center items-center w-full">
             <div className="w-full bg-gray-200 rounded shadow-2xl p-8 m-4"> 
-                {nftClaimed &&
+                {hasCheckedEligibility && !eligibleToClaim &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                        {nftClaimed}
+                        You are not eligible to claim the NFT!
+                    </p>
+                }
+                {hasCheckedEligibility && eligibleToClaim &&
+                    <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
+                        You are eligible to claim the NFT!
                     </p>
                 }
                 <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
