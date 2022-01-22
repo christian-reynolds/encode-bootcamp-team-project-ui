@@ -21,7 +21,7 @@ function Main() {
     }, [account, localStorage.getItem(accountStorage)]);
   
     return (
-        <div className="p-10">
+        <div className="flex flex-wrap justify-center items-center w-full">
             <TokenCreationForm accountStorage={accountStorage} deployedTokens={deployedTokens} getDeployedTokens={getDeployedTokens} />
             {deployedTokens && <DeployedTokens deployedTokens={deployedTokens} />}
         </div>

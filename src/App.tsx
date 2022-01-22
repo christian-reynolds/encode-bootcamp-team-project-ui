@@ -27,31 +27,33 @@ function App() {
         pauseOnHover
       />
       <div className="App">
-        <header className="App-header bg-gray-700">
+        <header className="App-header flex flex-wrap bg-gray-700">
           <Wallet />
         </header>
-        <div className="App-body bg-gray-500">
-          <BrowserRouter>
-            <Routes>
-              <Route 
-                path="/"
-                element={<Main />}
-              />
-              <Route 
-                path="/nft/:tokenId"
-                element={<NftCreationForm />}
-              />
-              <Route 
-                path="/nft/:tokenId/claim"
-                element={<NftClaimForm />}
-              />
-              <Route 
-                path="/token/:tokenId"
-                element={<TokenManagement />}
-              />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </BrowserRouter>
+        <div className="App-body">
+          <div className="flex w-full h-full bg-gray-500">
+            <BrowserRouter>
+              <Routes>
+                <Route 
+                  path="/"
+                  element={<Main />}
+                />
+                <Route 
+                  path="/nft/:tokenId"
+                  element={<NftCreationForm />}
+                />
+                <Route 
+                  path="/nft/:tokenId/claim"
+                  element={<NftClaimForm />}
+                />
+                <Route 
+                  path="/token/:tokenId"
+                  element={<TokenManagement />}
+                />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </BrowserRouter>
+          </div>
         </div>
       </div>
     </Web3ReactProvider>

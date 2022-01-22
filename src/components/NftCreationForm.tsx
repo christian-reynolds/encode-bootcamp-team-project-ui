@@ -65,7 +65,7 @@ function NftCreationForm() {
 
     return (
         <div className="flex flex-wrap justify-center items-center w-full">
-            <div className="w-full bg-gray-200 rounded shadow-2xl p-8 m-4"> 
+            <div className="w-1/2 bg-gray-200 rounded shadow-2xl p-8 m-4"> 
                 {ipfsUrl &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                         Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a>
