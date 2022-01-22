@@ -12,11 +12,10 @@ import { getMerkleRoot } from "../utils/merkle";
 type Params = 'tokenId';
 
 function NftCreationForm() {
-    const { library } = useWeb3React<providers.Web3Provider>();
+    const { library, account } = useWeb3React<providers.Web3Provider>();
     const params = useParams<Params>();
     const navigate = useNavigate();
     const tokenId = params.tokenId;
-    const { account } = useWeb3React<providers.Web3Provider>();
     const [selectedFile, setSelectedFile] = useState<File>();
     const [ipfsUrl, setIpfsUrl] = useState('');
     // const [fileBuffer, setFileBuffer] = useState<File>();

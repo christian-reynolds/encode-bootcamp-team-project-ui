@@ -8,6 +8,7 @@ import Wallet from './components/Wallet';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import NftCreationForm from './components/NftCreationForm';
+import NftClaimForm from './components/NftClaimForm';
 
 const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 
@@ -39,6 +40,10 @@ function App() {
               <Route 
                 path="/nft/:tokenId"
                 element={<NftCreationForm />}
+              />
+              <Route 
+                path="/nft/:tokenId/claim"
+                element={<NftClaimForm />}
               />
               <Route 
                 path="/token/:tokenId"
