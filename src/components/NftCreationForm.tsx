@@ -85,6 +85,9 @@ function NftCreationForm() {
     return (
         <div className="flex flex-wrap justify-center items-center w-full">
             <div className="w-1/2 bg-gray-200 rounded shadow-2xl p-8 m-4"> 
+                <p className="block w-full text-center text-gray-600 text-base font-bold mb-6">
+                    Create an NFT to give out to your shareholders.  When you click create, a snapshot of your current shareholders will be taken and used to create a whitelist for the NFT claim.
+                </p>
                 {ipfsUrl && deployedNft &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                         Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a><br /><br />
@@ -92,12 +95,9 @@ function NftCreationForm() {
                         <a href={`/nft/${tokenId}/claim`} target="_blank">NFT Claim link!</a>
                     </p>
                 }
-                <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                    {/* Errors would go here */}
-                </p>
-                <p className="block w-full text-center text-gray-600 text-base font-bold mb-6">
-                    Create an NFT to give out to your shareholders.
-                </p>
+                {/* <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
+                    Errors would go here
+                </p> */}
                 <div className="flex flex-col mb-4">
                     <label className="mb-2 font-bold text-lg text-left text-gray-600">NFT Name</label>
                     <input className="border py-2 px-3 text-sm text-black" placeholder="NFT Name" type="text" onChange={nameOnChange} />
