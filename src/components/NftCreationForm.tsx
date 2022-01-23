@@ -3,7 +3,7 @@ import { providers } from "ethers";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, toastPromise } from "../utils";
-import { ZERO_ADDRESS } from "../utils/constants";
+import { ETHERSCAN_BASE, ZERO_ADDRESS } from "../utils/constants";
 import { getTokensForAccount } from "../utils/tokens";
 import { addFile } from "../utils/ipfs";
 import { deployErc721 } from "../utils/web3";
@@ -21,8 +21,13 @@ function NftCreationForm() {
     const [selectedFile, setSelectedFile] = useState<File>();
     const [ipfsUrl, setIpfsUrl] = useState('');
     const [deployedNft, setDeployedNft] = useState('');
+    const [name, setName] = useState('');
+    const [symbol, setSymbol] = useState('');
 
     const { result: mongoObj } = useAsync(getContract, [tokenId!]);
+
+    const nameOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value);
+    const symbolOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setSymbol(event.target.value);
 
     // On file select (from the pop up)
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +50,7 @@ function NftCreationForm() {
         const merkleRoot = await getMerkleRoot(tokenId!);
 
         // Deploy the ERC721 contract
-        const tx = deployErc721(library!, "This is test", "TST", url, merkleRoot);
+        const tx = deployErc721(library!, name, symbol, url, merkleRoot);
         const contractAddr = await toastPromise(tx);
         console.log('contractAddr: ', contractAddr);
         setDeployedNft(contractAddr)
@@ -82,13 +87,22 @@ function NftCreationForm() {
             <div className="w-1/2 bg-gray-200 rounded shadow-2xl p-8 m-4"> 
                 {ipfsUrl && deployedNft &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                        Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a><br />
+                        Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a><br /><br />
+                        <a href={`${ETHERSCAN_BASE}/address/${deployedNft}`} target="_blank" rel="noreferrer">View the contract on Etherscan!</a><br /><br />
                         <a href={`/nft/${tokenId}/claim`} target="_blank">NFT Claim link!</a>
                     </p>
                 }
                 <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                     {/* Errors would go here */}
                 </p>
+                <div className="flex flex-col mb-4">
+                    <label className="mb-2 font-bold text-lg text-left text-gray-600">NFT Name</label>
+                    <input className="border py-2 px-3 text-sm text-black" placeholder="NFT Name" type="text" onChange={nameOnChange} />
+                </div>
+                <div className="flex flex-col mb-4">
+                    <label className="mb-2 font-bold text-lg text-left text-gray-600">NFT Symbol</label>
+                    <input className="border py-2 px-3 text-sm text-black" placeholder="NFT Symbol" type="text" onChange={symbolOnChange} />
+                </div>
                 <div className="flex flex-col mb-4">
                     <label className="mb-2 font-bold text-lg text-left text-gray-600">Select Image</label>
                     <input className="border py-2 px-3 text-sm text-black" placeholder="Select Image" type="file" onChange={onFileChange} />
