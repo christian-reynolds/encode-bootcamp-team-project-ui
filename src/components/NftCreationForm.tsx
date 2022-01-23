@@ -20,7 +20,7 @@ function NftCreationForm() {
     const tokenId = params.tokenId;
     const [selectedFile, setSelectedFile] = useState<File>();
     const [ipfsUrl, setIpfsUrl] = useState('');
-    
+    const [deployedNft, setDeployedNft] = useState('');
 
     const { result: mongoObj } = useAsync(getContract, [tokenId!]);
 
@@ -48,6 +48,7 @@ function NftCreationForm() {
         const tx = deployErc721(library!, "This is test", "TST", url, merkleRoot);
         const contractAddr = await toastPromise(tx);
         console.log('contractAddr: ', contractAddr);
+        setDeployedNft(contractAddr)
 
         // Update the database
         const update = {
@@ -79,9 +80,10 @@ function NftCreationForm() {
     return (
         <div className="flex flex-wrap justify-center items-center w-full">
             <div className="w-1/2 bg-gray-200 rounded shadow-2xl p-8 m-4"> 
-                {ipfsUrl &&
+                {ipfsUrl && deployedNft &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                        Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a>
+                        Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a><br />
+                        <a href={`/nft/${tokenId}/claim`} target="_blank">NFT Claim link!</a>
                     </p>
                 }
                 <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
