@@ -31,7 +31,7 @@ function App() {
           <Wallet />
         </header>
         <div className="App-body">
-          <div className="flex w-full h-full bg-gray-500">
+          <div className="flex w-full min-h-screen bg-gray-500">
             <BrowserRouter>
               <Routes>
                 <Route 
