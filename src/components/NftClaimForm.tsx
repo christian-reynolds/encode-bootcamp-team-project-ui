@@ -51,7 +51,7 @@ function NftClaimForm() {
     };
 
     return (
-        <div className="flex flex-wrap justify-center items-center w-full h-full">
+        <div className="flex flex-wrap justify-center items-center w-full">
             <div className="w-1/2 bg-gray-200 rounded shadow-2xl p-8 m-4"> 
                 {hasCheckedEligibility && !eligibleToClaim &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
