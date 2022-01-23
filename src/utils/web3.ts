@@ -58,8 +58,7 @@ export const callContractView = async (provider: providers.Web3Provider, contrac
 };
 
 export const claimNft = async (provider: providers.Web3Provider, contractAddress: string, proof: string[]) => {
-  // TODO: Figure out how to get the ERC721 contract address and replace the hardcoded address
-  const contract = new Contract("0xd88f791bf1e939727d7e4f9027c1cfbe0029f5b0", BASE_ERC721.abi, provider.getSigner());
+  const contract = new Contract(contractAddress, BASE_ERC721.abi, provider.getSigner());
 
   const tx = await contract.claim(proof);
   await tx.wait();

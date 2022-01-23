@@ -1,9 +1,11 @@
 import { useWeb3React } from "@web3-react/core";
 import { providers } from "ethers";
 import { useState } from "react";
+import { useAsync } from "react-async-hook";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, toastPromise } from "../utils";
 import { ETHERSCAN_BASE } from "../utils/constants";
+import { getContract } from "../utils/data";
 import { getMerkleProof } from "../utils/merkle";
 import { claimNft } from "../utils/web3";
 
@@ -18,6 +20,8 @@ function NftClaimForm() {
     const navigate = useNavigate();
     const tokenId = params.tokenId;
 
+    const { result: mongoObj } = useAsync(getContract, [tokenId!]);
+
     const onClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         try {
             event.preventDefault();
@@ -31,7 +35,7 @@ function NftClaimForm() {
             } else {
                 setEligibleToClaim(true);
                 // Call the ERC721 claim function and pass in the proof
-                const tx = claimNft(library!, tokenId!, merkleProof);
+                const tx = claimNft(library!, mongoObj.nftAddress, merkleProof);
                 const hash = await toastPromise(tx);
                 setTxHash(hash);
             }
