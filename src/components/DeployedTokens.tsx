@@ -16,7 +16,7 @@ function DeployedTokens({ deployedTokens }: Props) {
                 deployedTokensObj.map(
                     (contract: string) =>
                         (
-                            <div className="grid grid-cols-2 p-2 m-2">
+                            <div className="grid grid-cols-2 p-2 m-2" key={contract}>
                                 <div>
                                     <a href={`/token/${contract}`} target="_blank">Manage {shortenAddress(contract)}</a>
                                 </div>
