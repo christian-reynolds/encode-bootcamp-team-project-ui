@@ -8,7 +8,7 @@ import { ZERO_ADDRESS } from '../utils/constants';
 
 function Main() {
     const [deployedTokens, setDeployedTokens] = useState<string>('');
-    const { account } = useWeb3React<providers.Web3Provider>();
+    const { library, account } = useWeb3React<providers.Web3Provider>();
     const accountStorage = 'account-' + account!;
   
     const getDeployedTokens = () => {
@@ -22,7 +22,9 @@ function Main() {
   
     return (
         <div className="flex flex-wrap justify-center items-center w-full">
-            <TokenCreationForm accountStorage={accountStorage} deployedTokens={deployedTokens} getDeployedTokens={getDeployedTokens} />
+            {library &&
+                <TokenCreationForm accountStorage={accountStorage} deployedTokens={deployedTokens} getDeployedTokens={getDeployedTokens} />
+            }
             {deployedTokens && <DeployedTokens deployedTokens={deployedTokens} />}
         </div>
     );

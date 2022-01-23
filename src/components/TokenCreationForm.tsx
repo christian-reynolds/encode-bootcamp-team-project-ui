@@ -55,39 +55,35 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
     };
 
     return (
-        <>
+        <div className="w-1/2 bg-gray-200 rounded shadow-2xl p-8 m-4">
             {library &&
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-wrap justify-center items-center w-full">
-                        <div className="w-full bg-gray-200 rounded shadow-2xl p-8 m-4"> 
-                            {txComplete &&
-                                <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                                    Your stock has been created!
-                                </p>
-                            }
-                            <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                                {errors.name && <div>Stock name is required</div>}
-                                {errors.symbol && <div>Stock symbol is required</div>}
-                                {errors.supply && <div>Stock supply is required and must be greater than zero</div>}
-                            </p>
-                            <div className="flex flex-col mb-4">
-                                <label className="mb-2 font-bold text-lg text-left text-gray-600">Stock Name</label>
-                                <input className="border py-2 px-3 text-sm text-black" {...register("name", { required: true, maxLength: 20 })} placeholder="Stock Name" />
-                            </div>
-                            <div className="flex flex-col mb-4">
-                                <label className="mb-2 font-bold text-lg text-left text-gray-600">Stock Symbol</label>
-                                <input className="border py-2 px-3 text-sm text-black" {...register("symbol", { required: true, pattern: /^[A-Za-z]+$/i, max: 5 })} placeholder="Stock Symbol" />
-                            </div>
-                            <div className="flex flex-col mb-4">
-                                <label className="mb-2 font-bold text-lg text-left text-gray-600">Stock Supply</label>
-                                <input className="border py-2 px-3 text-sm text-black" type="number" {...register("supply", { required: true, min: 1 })} placeholder="Stock Supply" />
-                            </div>
-                            <Button label="Deploy Stock" className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" />
-                        </div>
+                    {txComplete &&
+                        <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
+                            Your stock has been created!
+                        </p>
+                    }
+                    <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
+                        {errors.name && <div>Stock name is required</div>}
+                        {errors.symbol && <div>Stock symbol is required</div>}
+                        {errors.supply && <div>Stock supply is required and must be greater than zero</div>}
+                    </p>
+                    <div className="flex flex-col mb-4">
+                        <label className="mb-2 font-bold text-lg text-left text-gray-600">Stock Name</label>
+                        <input className="border py-2 px-3 text-sm text-black" {...register("name", { required: true, maxLength: 20 })} placeholder="Stock Name" />
                     </div>
+                    <div className="flex flex-col mb-4">
+                        <label className="mb-2 font-bold text-lg text-left text-gray-600">Stock Symbol</label>
+                        <input className="border py-2 px-3 text-sm text-black" {...register("symbol", { required: true, pattern: /^[A-Za-z]+$/i, max: 5 })} placeholder="Stock Symbol" />
+                    </div>
+                    <div className="flex flex-col mb-4">
+                        <label className="mb-2 font-bold text-lg text-left text-gray-600">Stock Supply</label>
+                        <input className="border py-2 px-3 text-sm text-black" type="number" {...register("supply", { required: true, min: 1 })} placeholder="Stock Supply" />
+                    </div>
+                    <Button label="Deploy Stock" className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" />
                 </form>
             }
-        </>
+        </div>
     );
 }
 
