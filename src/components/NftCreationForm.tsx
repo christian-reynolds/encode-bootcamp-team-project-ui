@@ -95,6 +95,9 @@ function NftCreationForm() {
                 <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                     {/* Errors would go here */}
                 </p>
+                <p className="block w-full text-center text-gray-600 text-base font-bold mb-6">
+                    Create an NFT to give out to your shareholders.
+                </p>
                 <div className="flex flex-col mb-4">
                     <label className="mb-2 font-bold text-lg text-left text-gray-600">NFT Name</label>
                     <input className="border py-2 px-3 text-sm text-black" placeholder="NFT Name" type="text" onChange={nameOnChange} />

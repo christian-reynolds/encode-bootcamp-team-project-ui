@@ -71,6 +71,9 @@ function NftClaimForm() {
                 <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                     {/* Errors would go here */}
                 </p>
+                <p className="block w-full text-center text-gray-600 text-base font-bold mb-6">
+                    Click below to claim the NFT!
+                </p>
                 <button type="submit" className="bg-gray-500 hover:bg-red-500 shadow-sm px-4 py-2 text-xs sm:text-sm text-white font-bold focus:outline-none rounded" onClick={onClick}>Claim NFT</button>
             </div>
         </div>
