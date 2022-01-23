@@ -58,6 +58,9 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
         <div className="w-1/2 bg-gray-200 rounded shadow-2xl p-8 m-4">
             {library &&
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <p className="block w-full text-center text-gray-600 text-base font-bold mb-6">
+                        Fill out the fields below to deploy your stock!
+                    </p>
                     {txComplete &&
                         <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                             Your stock has been created!
