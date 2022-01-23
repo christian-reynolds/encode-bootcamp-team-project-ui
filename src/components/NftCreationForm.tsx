@@ -8,6 +8,8 @@ import { getTokensForAccount } from "../utils/tokens";
 import { addFile } from "../utils/ipfs";
 import { deployErc721 } from "../utils/web3";
 import { getMerkleRoot } from "../utils/merkle";
+import { useAsync } from "react-async-hook";
+import { getContract, updateContract } from "../utils/data";
 
 type Params = 'tokenId';
 
@@ -18,7 +20,9 @@ function NftCreationForm() {
     const tokenId = params.tokenId;
     const [selectedFile, setSelectedFile] = useState<File>();
     const [ipfsUrl, setIpfsUrl] = useState('');
-    // const [fileBuffer, setFileBuffer] = useState<File>();
+    
+
+    const { result: mongoObj } = useAsync(getContract, [tokenId!]);
 
     // On file select (from the pop up)
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +48,15 @@ function NftCreationForm() {
         const tx = deployErc721(library!, "This is test", "TST", url, merkleRoot);
         const contractAddr = await toastPromise(tx);
         console.log('contractAddr: ', contractAddr);
+
+        // Update the database
+        const update = {
+            _id: mongoObj._id,
+            address: mongoObj.address,
+            nftAddress: contractAddr,
+            createdBlock: mongoObj.createdBlock
+        };
+        updateContract(update);
     };
     
 

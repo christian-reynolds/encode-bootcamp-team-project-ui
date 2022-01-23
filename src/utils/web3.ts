@@ -24,9 +24,11 @@ export const deployErc20 = async (provider: providers.Web3Provider, name: string
   const factory = new ContractFactory(BASE_ERC20.abi, BASE_ERC20.bytecode, provider.getSigner());
   const contract = await factory.deploy(name, symbol, utils.parseUnits(supply));
   await contract.deployed();
-  
+
+  const block = await provider.getBlockNumber();
+  console.log('block: ', block);
   console.log('contract.address: ', contract.address);
-  return contract.address;
+  return { address: contract.address, blockNum: block };
 };
 
 export const deployErc721 = async (provider: providers.Web3Provider, name: string, symbol: string, baseUrl: string, merkleRoot: string) => {

@@ -28,12 +28,12 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
         try {
             setTxComplete(false);
             const tx = deployErc20(library!, data.name, data.symbol, data.supply);
-            const contractAddr = await toastPromise(tx);
-            const contracts = [contractAddr];
+            const deployed = await toastPromise(tx);
+            const contracts = [deployed.address];
             setTxComplete(true);
 
             // Save the contract address to the db
-            saveContract({ address: contractAddr });
+            saveContract({ address: deployed.address, createdBlock: deployed.blockNum });
 
             if (deployedTokens) {
                 const retrievedObj = JSON.parse(deployedTokens);
