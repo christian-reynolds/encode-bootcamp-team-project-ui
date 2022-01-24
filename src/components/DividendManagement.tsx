@@ -7,6 +7,7 @@ import { ETHERSCAN_BASE, ZERO_ADDRESS } from "../utils/constants";
 import { getTokensForAccount } from "../utils/tokens";
 import { getMerkleRoot } from "../utils/merkle";
 import { useAsync } from "react-async-hook";
+import { getTotalDividends } from "../utils/web3";
 
 type Params = 'tokenId';
 
@@ -17,6 +18,8 @@ function DividendManagement() {
     const tokenId = params.tokenId;
     const [amount, setAmount] = useState('');
     const [txHash, setTxHash] = useState('');
+
+    const { result: totalDividends } = useAsync(getTotalDividends, [library!, tokenId!]);
 
     const amountOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setAmount(event.target.value);
     
@@ -65,7 +68,7 @@ function DividendManagement() {
                     Errors would go here
                 </p> */}
                 <p className="block w-full text-left text-gray-500 text-base font-bold mb-6">
-                    Current Dividend Balance: 0.25 ETH
+                    Current Dividend Balance: {totalDividends} ETH
                 </p>
                 <div className="flex flex-col mb-4">
                     <label className="mb-2 font-bold text-lg text-left text-gray-600">ETH</label>

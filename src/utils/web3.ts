@@ -66,3 +66,12 @@ export const claimNft = async (provider: providers.Web3Provider, contractAddress
   console.log("claimNft: ", tx.hash);
   return tx.hash;
 };
+
+export const getTotalDividends = async (provider: providers.Web3Provider, contractAddress: string) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider);
+
+  const data = await contract.totalDividends();
+  
+  console.log("getTotalDividends: ", utils.formatEther(data));
+  return utils.formatEther(data);
+};
