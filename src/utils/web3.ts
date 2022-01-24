@@ -87,3 +87,22 @@ export const addDividends = async (provider: providers.Web3Provider, contractAdd
   console.log("addDividends: ", tx.hash);
   return tx.hash;
 };
+
+export const getClaimableDividend = async (provider: providers.Web3Provider, contractAddress: string, address: string) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider);
+
+  const data = await contract.dividendBalanceOf(address);
+  
+  console.log("getClaimableDividend: ", utils.formatEther(data));
+  return utils.formatEther(data);
+};
+
+export const claimDividend = async (provider: providers.Web3Provider, contractAddress: string) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider.getSigner());
+
+  const tx = await contract.claimDividend();
+  await tx.wait();
+  
+  console.log("claimDividend: ", tx.hash);
+  return tx.hash;
+};
