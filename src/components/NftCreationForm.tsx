@@ -92,7 +92,7 @@ function NftCreationForm() {
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                         Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a><br /><br />
                         <a href={`${ETHERSCAN_BASE}/address/${deployedNft}`} target="_blank" rel="noreferrer">View the contract on Etherscan!</a><br /><br />
-                        <a href={`/nft/${tokenId}/claim`} target="_blank">NFT Claim link!</a>
+                        <a href={`/nft/${tokenId}/claim`} target="_blank">Give the NFT Claim link to your shareholders!</a>
                     </p>
                 }
                 {/* <p className="block w-full text-center text-red-400 text-base font-bold mb-6">

@@ -24,7 +24,7 @@ function DeployedTokens({ deployedTokens }: Props) {
                                     <a href={`/nft/${contract}`} target="_blank">Create NFT</a>
                                 </div>
                                 <div>
-                                    <a href={`/dividend/${contract}`} target="_blank">Add Dividends</a>
+                                    <a href={`/dividend/${contract}`} target="_blank">Add Funds For Shareholders</a>
                                 </div>
                             </div>
                         )

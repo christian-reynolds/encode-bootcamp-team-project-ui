@@ -11,7 +11,7 @@ import { claimNft } from "../utils/web3";
 
 type Params = 'tokenId';
 
-function NftClaimForm() {
+function DividendClaimForm() {
     const { library, account } = useWeb3React<providers.Web3Provider>();
     const [hasCheckedEligibility, setHasCheckedEligibility] = useState(false);
     const [eligibleToClaim, setEligibleToClaim] = useState(false);
@@ -79,4 +79,4 @@ function NftClaimForm() {
     );
 }
 
-export default NftClaimForm;
+export default DividendClaimForm;

@@ -69,7 +69,8 @@ function DividendManagement() {
                 </p>
                 {txHash &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                        Dividends have been added! <a href={`${ETHERSCAN_BASE}/tx/${txHash}`} target="_blank" rel="noreferrer">View the tx!</a>
+                        Dividends have been added! <a href={`${ETHERSCAN_BASE}/tx/${txHash}`} target="_blank" rel="noreferrer">View the tx!</a><br /><br />
+                        <a href={`/dividend/${tokenId}/claim`} target="_blank">Give the Dividend Claim link to your shareholders!</a>
                     </p>
                 }
                 {/* <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
