@@ -70,7 +70,9 @@ export const claimNft = async (provider: providers.Web3Provider, contractAddress
 export const getTotalDividends = async (provider: providers.Web3Provider, contractAddress: string) => {
   const contract = new Contract(contractAddress, BASE_ERC20.abi, provider);
 
-  const data = await contract.totalDividends();
+  // TODO: This is currently returning an incorrect value.  For now I will just get the contract balance
+  // const data = await contract.totalDividends();
+  const data = await provider.getBalance(contractAddress);
   
   console.log("getTotalDividends: ", utils.formatEther(data));
   return utils.formatEther(data);
