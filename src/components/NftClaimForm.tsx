@@ -40,9 +40,9 @@ function NftClaimForm() {
             }
         } catch (error: any) {
             if (!(error.code && error.code === 4001)) {
-                toast('Something went horribly wrong!', {
+                toast('Oh no! Something went wrong!', {
                     position: 'top-center',
-                    className: 'bg-red-500',
+                    className: 'border-2 border-black text-black font-bold rounded bg-red-500 text-center',
                     icon: '🤯',
                 });
             }
