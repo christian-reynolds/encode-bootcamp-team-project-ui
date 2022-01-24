@@ -45,9 +45,9 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
             getDeployedTokens();
         } catch (error: any) {
             if (!(error.code && error.code === 4001)) {
-                toast('Something went horribly wrong!', {
+                toast('Oh no! Something went wrong!', {
                     position: 'top-center',
-                    className: 'bg-red-500',
+                    className: 'border-2 border-black text-black font-bold rounded bg-red-500 text-center',
                     icon: '🤯',
                 });
             }
@@ -83,7 +83,7 @@ function TokenCreationForm({ accountStorage, deployedTokens, getDeployedTokens }
                         <label className="mb-2 font-bold text-lg text-left text-gray-600">Stock Supply</label>
                         <input className="border py-2 px-3 text-sm text-black" type="number" {...register("supply", { required: true, min: 1 })} placeholder="Stock Supply" />
                     </div>
-                    <Button label="Deploy Stock" className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" />
+                    <Button label="Deploy Stock" className="bg-gray-500 hover:bg-red-500 shadow-sm px-4 py-2 text-xs sm:text-sm text-white font-bold focus:outline-none rounded" />
                 </form>
             }
         </div>

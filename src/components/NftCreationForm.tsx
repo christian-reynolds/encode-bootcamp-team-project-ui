@@ -92,7 +92,7 @@ function NftCreationForm() {
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                         Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a><br /><br />
                         <a href={`${ETHERSCAN_BASE}/address/${deployedNft}`} target="_blank" rel="noreferrer">View the contract on Etherscan!</a><br /><br />
-                        <a href={`/nft/${tokenId}/claim`} target="_blank">NFT Claim link!</a>
+                        <a href={`/nft/${tokenId}/claim`} target="_blank">Give the NFT Claim link to your shareholders!</a>
                     </p>
                 }
                 {/* <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
@@ -110,7 +110,7 @@ function NftCreationForm() {
                     <label className="mb-2 font-bold text-lg text-left text-gray-600">Select Image</label>
                     <input className="border py-2 px-3 text-sm text-black" placeholder="Select Image" type="file" onChange={onFileChange} />
                 </div>
-                <button type="submit" className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" onClick={onClick}>Create NFT</button>
+                <button type="submit" className="bg-gray-500 hover:bg-red-500 shadow-sm px-4 py-2 text-xs sm:text-sm text-white font-bold focus:outline-none rounded" onClick={onClick}>Create NFT</button>
             </div>
         </div>
     );

@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import NftCreationForm from './components/NftCreationForm';
 import NftClaimForm from './components/NftClaimForm';
+import DividendManagement from './components/DividendManagement';
+import DividendClaimForm from './components/DividendClaimForm';
 
 const getLibrary = (provider: any) => new providers.Web3Provider(provider);
 
@@ -37,6 +39,14 @@ function App() {
                 <Route 
                   path="/"
                   element={<Main />}
+                />
+                <Route
+                  path="/dividend/:tokenId"
+                  element={<DividendManagement />}
+                />
+                <Route
+                  path="/dividend/:tokenId/claim"
+                  element={<DividendClaimForm />}
                 />
                 <Route 
                   path="/nft/:tokenId"

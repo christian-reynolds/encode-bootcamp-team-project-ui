@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { providers } from "ethers";
 import { useState } from "react";
 import { useAsync } from "react-async-hook";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast, toastPromise } from "../utils";
 import { ETHERSCAN_BASE } from "../utils/constants";
 import { getContract } from "../utils/data";
@@ -17,7 +17,6 @@ function NftClaimForm() {
     const [eligibleToClaim, setEligibleToClaim] = useState(false);
     const [txHash, setTxHash] = useState('');
     const params = useParams<Params>();
-    const navigate = useNavigate();
     const tokenId = params.tokenId;
 
     const { result: mongoObj } = useAsync(getContract, [tokenId!]);
@@ -41,9 +40,9 @@ function NftClaimForm() {
             }
         } catch (error: any) {
             if (!(error.code && error.code === 4001)) {
-                toast('Something went horribly wrong!', {
+                toast('Oh no! Something went wrong!', {
                     position: 'top-center',
-                    className: 'bg-red-500',
+                    className: 'border-2 border-black text-black font-bold rounded bg-red-500 text-center',
                     icon: '🤯',
                 });
             }

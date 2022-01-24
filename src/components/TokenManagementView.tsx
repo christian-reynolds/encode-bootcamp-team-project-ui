@@ -25,9 +25,9 @@ function TokenManagementView({ functionName, inputs, tokenId }: Props) {
             setData(await toastPromise(tx));
         } catch (error: any) {
             if (!(error.code && error.code === 4001)) {
-                toast('Something went horribly wrong!', {
+                toast('Oh no! Something went wrong!', {
                     position: 'top-center',
-                    className: 'bg-red-500',
+                    className: 'border-2 border-black text-black font-bold rounded bg-red-500 text-center',
                     icon: '🤯',
                 });
             }
@@ -45,12 +45,10 @@ function TokenManagementView({ functionName, inputs, tokenId }: Props) {
             {inputs.map((item) => (
                 <div className="flex flex-col mb-4">
                     <label className="mb-2 font-bold text-lg text-left text-gray-600" htmlFor={item.name}>{item.name}</label>
-                    {/* <input className="border py-2 px-3 text-black" type="text" name={item.name} id={item.name} onChange={onChange} /> */}
                     <TextboxDynamic label={item.type} update={setInputValue} className="border py-2 px-3 text-sm text-black" />
                 </div>
             ))}
             <Button label="Read" onClick={onClick} />
-            {/* <button className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" onClick={onClick}>Read</button> */}
         </div>
     );
 }

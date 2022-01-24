@@ -66,3 +66,45 @@ export const claimNft = async (provider: providers.Web3Provider, contractAddress
   console.log("claimNft: ", tx.hash);
   return tx.hash;
 };
+
+export const getTotalDividends = async (provider: providers.Web3Provider, contractAddress: string) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider);
+
+  // TODO: This is currently returning an incorrect value.  For now I will just get the contract balance
+  // const data = await contract.totalDividends();
+  const data = await provider.getBalance(contractAddress);
+  
+  console.log("getTotalDividends: ", utils.formatEther(data));
+  return utils.formatEther(data);
+};
+
+export const addDividends = async (provider: providers.Web3Provider, contractAddress: string, amount: string) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider.getSigner());
+
+  const tx = await contract.depositDividends({
+    value: utils.parseEther(amount)
+  });
+  await tx.wait();
+  
+  console.log("addDividends: ", tx.hash);
+  return tx.hash;
+};
+
+export const getClaimableDividend = async (provider: providers.Web3Provider, contractAddress: string, address: string) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider);
+
+  const data = await contract.dividendBalanceOf(address);
+  
+  console.log("getClaimableDividend: ", utils.formatEther(data));
+  return utils.formatEther(data);
+};
+
+export const claimDividend = async (provider: providers.Web3Provider, contractAddress: string) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider.getSigner());
+
+  const tx = await contract.claimDividend();
+  await tx.wait();
+  
+  console.log("claimDividend: ", tx.hash);
+  return tx.hash;
+};
