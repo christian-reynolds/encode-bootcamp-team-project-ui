@@ -26,7 +26,7 @@ function DividendManagement() {
         return getTotalDividends(lib, addr);
     };
 
-    const { result: totalDividends } = useAsync(getDividends, [library!, tokenId!, txHash], );
+    const { result: totalDividends } = useAsync(getDividends, [library!, tokenId!, txHash]);
     
     const onClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         try {
