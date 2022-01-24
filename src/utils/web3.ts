@@ -75,3 +75,15 @@ export const getTotalDividends = async (provider: providers.Web3Provider, contra
   console.log("getTotalDividends: ", utils.formatEther(data));
   return utils.formatEther(data);
 };
+
+export const addDividends = async (provider: providers.Web3Provider, contractAddress: string, amount: string) => {
+  const contract = new Contract(contractAddress, BASE_ERC20.abi, provider.getSigner());
+
+  const tx = await contract.depositDividends({
+    value: utils.parseEther(amount)
+  });
+  await tx.wait();
+  
+  console.log("addDividends: ", tx.hash);
+  return tx.hash;
+};

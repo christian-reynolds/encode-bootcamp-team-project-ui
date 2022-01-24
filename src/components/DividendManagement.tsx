@@ -5,9 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast, toastPromise } from "../utils";
 import { ETHERSCAN_BASE, ZERO_ADDRESS } from "../utils/constants";
 import { getTokensForAccount } from "../utils/tokens";
-import { getMerkleRoot } from "../utils/merkle";
 import { useAsync } from "react-async-hook";
-import { getTotalDividends } from "../utils/web3";
+import { getTotalDividends, addDividends } from "../utils/web3";
 
 type Params = 'tokenId';
 
@@ -17,25 +16,34 @@ function DividendManagement() {
     const navigate = useNavigate();
     const tokenId = params.tokenId;
     const [amount, setAmount] = useState('');
-    const [txHash, setTxHash] = useState('');
-
-    const { result: totalDividends } = useAsync(getTotalDividends, [library!, tokenId!]);
+    const [txHash, setTxHash] = useState('');    
 
     const amountOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setAmount(event.target.value);
+
+    // TODO: Review the getDividends and getTotalDividends implementation
+    // I don't think this is a proper implementation but I want to call getTotalDividends again when the txHash has been updated
+    const getDividends = async (lib: providers.Web3Provider, addr: string, hash: string) => {
+        return getTotalDividends(lib, addr);
+    };
+
+    const { result: totalDividends } = useAsync(getDividends, [library!, tokenId!, txHash], );
     
     const onClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        
-        // Create the Merkle Tree and get the Merkle Root
-        const merkleRoot = await getMerkleRoot(tokenId!);
-
-        // Deploy the ERC721 contract
-        // const tx = deployErc721(library!, name, symbol, url, merkleRoot);
-        // const contractAddr = await toastPromise(tx);
-        // console.log('contractAddr: ', contractAddr);
-        // setDeployedNft(contractAddr)
-    };
-    
+        try {
+            event.preventDefault();
+            const tx = addDividends(library!, tokenId!, amount);
+            const hash = await toastPromise(tx);
+            setTxHash(hash);
+        } catch (error: any) {
+            if (!(error.code && error.code === 4001)) {
+                toast('Something went horribly wrong!', {
+                    position: 'top-center',
+                    className: 'bg-red-500',
+                    icon: '🤯',
+                });
+            }
+        }
+    };    
 
     // TODO: There is a bug with this logic.
     // If there is no account connected then it allows you to stay on the page when you shouldn't be. Not sure how to handle this right now
