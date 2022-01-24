@@ -5,11 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast, toastPromise } from "../utils";
 import { ETHERSCAN_BASE, ZERO_ADDRESS } from "../utils/constants";
 import { getTokensForAccount } from "../utils/tokens";
-import { addFile } from "../utils/ipfs";
-import { deployErc721 } from "../utils/web3";
 import { getMerkleRoot } from "../utils/merkle";
 import { useAsync } from "react-async-hook";
-import { getContract, updateContract } from "../utils/data";
 
 type Params = 'tokenId';
 
@@ -18,51 +15,22 @@ function DividendManagement() {
     const params = useParams<Params>();
     const navigate = useNavigate();
     const tokenId = params.tokenId;
-    const [selectedFile, setSelectedFile] = useState<File>();
-    const [ipfsUrl, setIpfsUrl] = useState('');
-    const [deployedNft, setDeployedNft] = useState('');
-    const [name, setName] = useState('');
-    const [symbol, setSymbol] = useState('');
+    const [amount, setAmount] = useState('');
+    const [txHash, setTxHash] = useState('');
 
-    const { result: mongoObj } = useAsync(getContract, [tokenId!]);
-
-    const nameOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value);
-    const symbolOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setSymbol(event.target.value);
-
-    // On file select (from the pop up)
-    const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
-        const file = event.target.files && event.target.files[0];
-        // Update the state
-        setSelectedFile(file!);
-    };
-
+    const amountOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setAmount(event.target.value);
+    
     const onClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        console.log('selectedFile: ', selectedFile);
-
-        // Upload the image to IPFS
-        const url = await addFile(selectedFile);
-        setIpfsUrl(url);
-        console.log('ipfsUrl: ', url);
         
         // Create the Merkle Tree and get the Merkle Root
         const merkleRoot = await getMerkleRoot(tokenId!);
 
         // Deploy the ERC721 contract
-        const tx = deployErc721(library!, name, symbol, url, merkleRoot);
-        const contractAddr = await toastPromise(tx);
-        console.log('contractAddr: ', contractAddr);
-        setDeployedNft(contractAddr)
-
-        // Update the database
-        const update = {
-            _id: mongoObj._id,
-            address: mongoObj.address,
-            nftAddress: contractAddr,
-            createdBlock: mongoObj.createdBlock
-        };
-        updateContract(update);
+        // const tx = deployErc721(library!, name, symbol, url, merkleRoot);
+        // const contractAddr = await toastPromise(tx);
+        // console.log('contractAddr: ', contractAddr);
+        // setDeployedNft(contractAddr)
     };
     
 
@@ -88,29 +56,22 @@ function DividendManagement() {
                 <p className="block w-full text-center text-gray-600 text-base font-bold mb-6">
                     Add ETH to distribute as dividends to your shareholders.
                 </p>
-                {ipfsUrl && deployedNft &&
+                {txHash &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
-                        Your image has been uploaded to IPFS! <a href={ipfsUrl} target="_blank">{ipfsUrl}</a><br /><br />
-                        <a href={`${ETHERSCAN_BASE}/address/${deployedNft}`} target="_blank" rel="noreferrer">View the contract on Etherscan!</a><br /><br />
-                        <a href={`/nft/${tokenId}/claim`} target="_blank">NFT Claim link!</a>
+                        Dividends have been added! <a href={`${ETHERSCAN_BASE}/tx/${txHash}`} target="_blank" rel="noreferrer">View the tx!</a>
                     </p>
                 }
                 {/* <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                     Errors would go here
                 </p> */}
+                <p className="block w-full text-left text-gray-500 text-base font-bold mb-6">
+                    Current Dividend Balance: 0.25 ETH
+                </p>
                 <div className="flex flex-col mb-4">
-                    <label className="mb-2 font-bold text-lg text-left text-gray-600">NFT Name</label>
-                    <input className="border py-2 px-3 text-sm text-black" placeholder="NFT Name" type="text" onChange={nameOnChange} />
+                    <label className="mb-2 font-bold text-lg text-left text-gray-600">ETH</label>
+                    <input className="border py-2 px-3 text-sm text-black" placeholder="Amount" type="text" onChange={amountOnChange} />
                 </div>
-                <div className="flex flex-col mb-4">
-                    <label className="mb-2 font-bold text-lg text-left text-gray-600">NFT Symbol</label>
-                    <input className="border py-2 px-3 text-sm text-black" placeholder="NFT Symbol" type="text" onChange={symbolOnChange} />
-                </div>
-                <div className="flex flex-col mb-4">
-                    <label className="mb-2 font-bold text-lg text-left text-gray-600">Select Image</label>
-                    <input className="border py-2 px-3 text-sm text-black" placeholder="Select Image" type="file" onChange={onFileChange} />
-                </div>
-                <button type="submit" className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" onClick={onClick}>Create NFT</button>
+                <button type="submit" className="block bg-gray-400 hover:bg-gray-600 text-white uppercase text-sm mx-auto p-4 rounded" onClick={onClick}>Add ETH</button>
             </div>
         </div>
     );
