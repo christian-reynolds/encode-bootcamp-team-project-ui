@@ -35,13 +35,12 @@ export const toastPromise = (promise: Promise<any>) => {
           },
           error: {
             render({data}){
-              // When the promise reject, data will contains the error
-              console.log('message: ', (data as any).error.message);
-                if ((data as any).code && (data as any).code === 4001) {
-                    return 'Transaction rejected by user'
-                } else {
-                    return `Error! ${(data as any).error.message}`
-                }
+              // When the promise reject, data will contain the error
+              if ((data as any).code && (data as any).code === 4001) {
+                  return 'Transaction rejected by user'
+              } else {
+                  return `Error! ${(data as any).error.message}`
+              }
             },
             icon: '🤯',
             className: 'border-2 border-black text-black font-bold font-charriot rounded bg-red-500 text-center',
