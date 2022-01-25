@@ -62,7 +62,7 @@ function NftClaimForm() {
                         You are eligible to claim the NFT!
                     </p>
                 }
-                {txHash &&
+                {txHash && eligibleToClaim &&
                     <p className="block w-full text-center text-red-400 text-base font-bold mb-6">
                         Your NFT has been claimed! <a href={`${ETHERSCAN_BASE}/tx/${txHash}`} target="_blank" rel="noreferrer">View the tx!</a>
                     </p>
